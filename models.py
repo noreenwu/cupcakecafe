@@ -46,3 +46,22 @@ class Cupcake(db.Model):
   id = Column(Integer, primary_key=True)
   name = Column(String)
   description = Column(String)
+
+  def format(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'description': self.description}  
+
+class Ingredient(db.Model):
+  __tablename__ = 'Ingredient'
+
+  id = Column(Integer, primary_key=True)
+  kind = Column(String)
+  name = Column(String)
+
+  def format(self):
+    return {
+      'id': self.id,
+      'kind': self.kind,
+      'name': self.name}
