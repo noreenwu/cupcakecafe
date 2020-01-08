@@ -39,3 +39,10 @@ class Person(db.Model):
       'id': self.id,
       'name': self.name,
       'catchphrase': self.catchphrase}
+
+class Cupcake(db.Model):
+  __tablename__ = 'Cupcake'
+
+  id = Column(Integer, primary_key=True)
+  name = Column(String)
+  description = Column(String)
