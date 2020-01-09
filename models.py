@@ -40,18 +40,29 @@ class Person(db.Model):
       'name': self.name,
       'catchphrase': self.catchphrase}
 
+cupcake_ingredient = db.Table('cupcake_ingredient',
+    db.Column('cupcake_id', db.Integer, db.ForeignKey('Cupcake.id')),
+    db.Column('ingredient_id', db.Integer, db.ForeignKey('Ingredient.id'))
+)
+
 class Cupcake(db.Model):
   __tablename__ = 'Cupcake'
 
   id = Column(Integer, primary_key=True)
   name = Column(String)
   description = Column(String)
+  ingredients = db.relationship('Ingredient', secondary=cupcake_ingredient,
+                                              backref=db.backref('cupcakes'), lazy=True)
+
 
   def format(self):
     return {
       'id': self.id,
       'name': self.name,
-      'description': self.description}  
+      'description': self.description}
+
+  def __repr__(self):
+      return f'<Cupcake {self.id}, {self.name}>'      
 
 class Ingredient(db.Model):
   __tablename__ = 'Ingredient'
@@ -60,8 +71,13 @@ class Ingredient(db.Model):
   kind = Column(String)
   name = Column(String)
 
+
   def format(self):
     return {
       'id': self.id,
       'kind': self.kind,
       'name': self.name}
+
+  def __repr__(self):
+      return f'<Ingredient {self.id}, {self.name}>'
+
