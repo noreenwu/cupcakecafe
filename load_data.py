@@ -18,6 +18,13 @@ for i in ingredients:
 
 db.session.commit()
 
+cupcakes = Cupcake.query.all()
+
+for c in cupcakes:
+    db.session.delete(c)
+db.session.commit()    
+
+
 ingredient1 = Ingredient(name="vanilla buttercream",
                          kind= "frosting")
 
@@ -37,22 +44,20 @@ db.session.add(ingredient3)
 db.session.commit()
 
 
-cupcakes = Cupcake.query.all()
-
-for c in cupcakes:
-    db.session.delete(c)
-db.session.commit()    
-
 cupcake1 = Cupcake(name="Classic",
                    description="classic rich chocolate frosting on fluffy yellow cake")
 
 cupcake2 = Cupcake(name="Chocolate Top to Bottom",
                    description="chocolate frosting on chocolate cake with chocolate chip topping")
 
+cupcake1.ingredients.append(ingredient1)
+cupcake1.ingredients.append(ingredient2)
+cupcake1.ingredients.append(ingredient3)
 db.session.add(cupcake1)
 db.session.add(cupcake2)
 
 db.session.commit()
 
-
-
+# get new data 
+cupcakes = Cupcake.query.all()
+ingredients = Ingredient.query.all()

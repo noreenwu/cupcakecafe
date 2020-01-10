@@ -55,11 +55,28 @@ class Cupcake(db.Model):
                                               backref=db.backref('cupcakes'), lazy=True)
 
 
-  def format(self):
+  def short(self):
     return {
       'id': self.id,
       'name': self.name,
-      'description': self.description}
+      'description': self.description
+    }
+
+
+  def long(self):
+    ilist = []
+    for i in self.ingredients:
+      print(i.name, i.kind)
+      ilist.append(
+        { 'name': i.name,
+          'kind': i.kind}
+      )
+    return {
+      'id': self.id,
+      'name': self.name,
+      'description': self.description,
+      'ingredients': ilist
+    }
 
   def __repr__(self):
       return f'<Cupcake {self.id}, {self.name}>'      
