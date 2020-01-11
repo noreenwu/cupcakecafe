@@ -52,7 +52,7 @@ def create_app(test_config=None):
         for c in cupcakes:
             clist.append(c.long())
 
-        return jsonify(clist)
+        return jsonify(clist), 200
 
 
     @app.route('/cupcakes/<int:id>')
@@ -69,7 +69,7 @@ def create_app(test_config=None):
         if the_cupcake is None:
             abort(404)
         
-        return jsonify({"success": True, "cupcake": the_cupcake.long()})
+        return jsonify({"success": True, "cupcake": the_cupcake.long()}), 200
 
 
     @app.route('/cupcakes', methods=['POST'])
@@ -94,8 +94,24 @@ def create_app(test_config=None):
         except DatabaseError:
             abort(422)
 
-        return jsonify({'success': True})
+        return jsonify({'success': True}), 200
 
+
+    @app.route('/cupcakes/<int:id>', methods=['DELETE'])
+    def delete_cupcake(id):
+        print("delete cupcake")
+
+        if not is_valid_cupcake(id):
+            abort(404)
+        
+        try:
+            the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
+            the_cupcake.delete()
+        except DatabaseError:
+            print("Error occurred while trying to delete the cupcake")
+            abort(422)
+
+        return jsonify({"success": True, "delete": id}), 200
 
     @app.route('/ingredients')
     def get_ingredients():
