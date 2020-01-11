@@ -49,52 +49,55 @@ class Cupcake(db.Model):
   __tablename__ = 'Cupcake'
 
   id = Column(Integer, primary_key=True)
-  name = Column(String)
+  name = Column(String, nullable=False, unique=True)
   description = Column(String)
   ingredients = db.relationship('Ingredient', secondary=cupcake_ingredient,
                                               backref=db.backref('cupcakes'), lazy=True)
 
 
   def short(self):
-    return {
-      'id': self.id,
-      'name': self.name,
-      'description': self.description
-    }
+      return {
+        'id': self.id,
+        'name': self.name,
+        'description': self.description
+      }
 
 
   def long(self):
-    ilist = []
-    for i in self.ingredients:
-      print(i.name, i.kind)
-      ilist.append(
-        { 'name': i.name,
+      ilist = []
+      for i in self.ingredients:
+        ilist.append(
+          {'name': i.name,
           'kind': i.kind}
-      )
-    return {
-      'id': self.id,
-      'name': self.name,
-      'description': self.description,
-      'ingredients': ilist
-    }
+        )
+      return {
+        'id': self.id,
+        'name': self.name,
+        'description': self.description,
+        'ingredients': ilist
+      }
+
+  def insert(self):
+      db.session.add(self)
+      db.session.commit()
 
   def __repr__(self):
       return f'<Cupcake {self.id}, {self.name}>'      
 
 class Ingredient(db.Model):
-  __tablename__ = 'Ingredient'
+    __tablename__ = 'Ingredient'
 
-  id = Column(Integer, primary_key=True)
-  kind = Column(String)
-  name = Column(String)
+    id = Column(Integer, primary_key=True)
+    kind = Column(String, nullable=False)
+    name = Column(String, nullable=False, unique=True)
 
 
-  def format(self):
-    return {
-      'id': self.id,
-      'kind': self.kind,
-      'name': self.name}
+    def format(self):
+        return {
+          'id': self.id,
+          'kind': self.kind,
+          'name': self.name}
 
-  def __repr__(self):
-      return f'<Ingredient {self.id}, {self.name}>'
+    def __repr__(self):
+        return f'<Ingredient {self.id}, {self.name}>'
 
