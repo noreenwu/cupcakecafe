@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, abort
+from flask import Flask, request, jsonify, abort
 from models import *
 from flask_cors import CORS
 import json
@@ -40,7 +40,7 @@ def create_app(test_config=None):
     def be_cool():
         return "Be cool, man, be coooool! You're almost a FSND grad!"
 
-    @app.route('/cupcakes')
+    @app.route('/cupcakes', methods=['GET'])
     def get_cupcakes():
         try:
             cupcakes = Cupcake.query.all()
@@ -55,7 +55,7 @@ def create_app(test_config=None):
         return jsonify(clist)
 
 
-    @app.route('/cupcakes/<int:id>/ingredients')
+    @app.route('/cupcakes/<int:id>')
     def get_cupcake_detail(id):
 
         if not is_valid_cupcake(id):
@@ -69,7 +69,32 @@ def create_app(test_config=None):
         if the_cupcake is None:
             abort(404)
         
-        return jsonify(the_cupcake.long())
+        return jsonify({"success": True, "cupcake": the_cupcake.long()})
+
+
+    @app.route('/cupcakes', methods=['POST'])
+    def add_cupcake():
+        print("add cupcake")
+        if not request.json:
+            abort(400)
+
+        name = request.get_json()['name']
+        description = request.get_json()['description']
+
+        if name is None:
+            abort(400)
+
+        if description is None:
+            description = ''
+
+        new_cupcake = Cupcake(name=name, description=description)
+
+        try:
+            new_cupcake.insert()
+        except DatabaseError:
+            abort(422)
+
+        return jsonify({'success': True})
 
 
     @app.route('/ingredients')
@@ -101,6 +126,14 @@ def create_app(test_config=None):
             "error": 404,
             "message": "Not found"
         }), 404
+
+    @app.errorhandler(400)
+    def cannot_process(error):
+        return jsonify({
+            "success": False,
+            "error": 400,
+            "message": "Bad request"
+        }), 400        
 
     return app
 
