@@ -126,6 +126,28 @@ def create_app(test_config=None):
 
         return jsonify(ilist)
 
+    @app.route('/ingredients', methods=['POST'])
+    def create_ingredient():
+
+        print("create ingredient")
+        if not request.json:
+            abort(400)
+
+        name = request.get_json()['name']
+        kind = request.get_json()['kind']
+
+        if name is None or kind is None:
+            abort(400)
+
+        new_ingredient = Ingredient(name=name, kind=kind)
+
+        try:
+            new_ingredient.insert()
+        except DatabaseError:
+            abort(422)
+
+        return jsonify({'success': True}), 200
+
 
     @app.errorhandler(422)
     def cannot_process(error):
