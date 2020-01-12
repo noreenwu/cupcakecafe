@@ -85,6 +85,9 @@ class Cupcake(db.Model):
       db.session.delete(self)
       db.session.commit()
 
+  def update(self):
+      db.session.commit()
+
   def __repr__(self):
       return f'<Cupcake {self.id}, {self.name}>'      
 

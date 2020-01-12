@@ -97,6 +97,36 @@ def create_app(test_config=None):
         return jsonify({'success': True}), 200
 
 
+    @app.route('/cupcakes/<int:id>', methods=['PATCH'])
+    def update_cupcake(id):
+        print ("update cupcake")
+
+        if not request.json:
+            abort(400)
+
+        if not is_valid_cupcake(id):
+            abort(404)
+
+        the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
+
+        name = request.get_json()['name']
+        description = request.get_json()['description']
+
+        if name and name is not None:
+            the_cupcake.name = name
+
+        if description and description is not None:
+            the_cupcake.description = description
+        
+        try:
+            the_cupcake.update()
+        except DatabaseError:
+            print ("could not update the cupcake")
+            abort(422)
+    
+        return jsonify({"success": True, "cupcake": the_cupcake.long()}), 200
+
+
     @app.route('/cupcakes/<int:id>', methods=['DELETE'])
     def delete_cupcake(id):
         print("delete cupcake")
