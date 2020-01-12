@@ -179,6 +179,38 @@ def create_app(test_config=None):
         return jsonify({'success': True}), 200
 
 
+    @app.route('/ingredients/<int:id>', methods=['PATCH'])
+    def update_ingredient_name(id):
+        if not request.json:
+            abort(400)
+            
+        name = request.get_json()['name']
+        kind = request.get_json()['kind']
+
+        try:
+            the_ingredient = Ingredient.query.filter_by(id=id).one_or_none()
+        except DatabaseError:
+            abort(422)
+
+        if the_ingredient is None:
+            abort(404)
+
+        if name and name is not None:
+            the_ingredient.name = name
+        
+        if kind and kind is not None:
+            the_ingredient.kind = kind
+
+        try:
+            the_ingredient.update()
+        except DatabaseError:
+            print("unable to update the ingredient")
+            abort(422)
+
+        print("updated the ingredient")
+        return jsonify({'success': True, "cupcake": the_ingredient.format()}), 200
+
+
     @app.errorhandler(422)
     def cannot_process(error):
         return jsonify({

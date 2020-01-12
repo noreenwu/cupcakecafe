@@ -113,6 +113,9 @@ class Ingredient(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    def update(self):
+        db.session.commit()
+
     def __repr__(self):
         return f'<Ingredient {self.id}, {self.name}>'
 
