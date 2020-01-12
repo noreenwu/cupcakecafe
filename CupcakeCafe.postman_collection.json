@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "a6421894-3fae-4040-b45e-711ece1026d3",
+		"name": "CupcakeCafe",
+		"description": "This API allows its user to add, delete and update cupcakes, ingredients and orders, all pertaining to business done at the Cupcake Cafe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET cupcakes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:5000/cupcakes",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"cupcakes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET cupcake detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:5000/cupcakes/2",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"cupcakes",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST cupcakes",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sweet Sally 2\",\n    \"description\": \"intense mocha chocolate\",\n\t\"ingredients\": [ {\"kind\": \"topping\", \"name\":\"marshmallows\" }, {\"kind\": \"cake\", \"name\": \"red velvet\"}]\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/cupcakes",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"cupcakes"
+					]
+				},
+				"description": "add a new cupcake"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE cupcakes",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:5000/cupcakes/11",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"cupcakes",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH cupcakes",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Basic\",\n\t\"description\": \"simple but good\"\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/cupcakes/7",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"cupcakes",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ingredients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:5000/ingredients",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"ingredients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST ingredients",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"cream cheese frosting 2\",\n    \"kind\": \"frosting\"\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/ingredients",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"ingredients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH ingredients",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"kind\": \"frosting\",\n    \"name\": \"zingy orange buttercream\"\n  }"
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/ingredients/22",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"ingredients",
+						"22"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
