@@ -94,7 +94,7 @@ def create_app(test_config=None):
         except DatabaseError:
             abort(422)
 
-        return jsonify({'success': True}), 200
+        return jsonify({'success': True, "cupcakes": new_cupcake.long()}), 200
 
 
     @app.route('/cupcakes/<int:id>', methods=['PATCH'])
@@ -176,7 +176,8 @@ def create_app(test_config=None):
         except DatabaseError:
             abort(422)
 
-        return jsonify({'success': True}), 200
+        return jsonify({'success': True,
+                        'ingredients': new_ingredient.format()}), 200
 
 
     @app.route('/ingredients/<int:id>', methods=['PATCH'])
