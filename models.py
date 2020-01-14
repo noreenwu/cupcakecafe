@@ -97,7 +97,7 @@ class Ingredient(db.Model):
     id = Column(Integer, primary_key=True)
     kind = Column(String, nullable=False)
     name = Column(String, nullable=False, unique=True)
-
+    usage_count = Column(Integer, default=0)
 
     def format(self):
         return {

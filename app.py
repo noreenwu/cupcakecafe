@@ -5,21 +5,37 @@ from flask_cors import CORS
 import json
 from sqlalchemy.exc import DatabaseError
 
-def is_valid_cupcake(id):
+# def is_valid_cupcake(id):
 
-    try:
-        cupcakes = Cupcake.query.all()
-    except DatabaseError:
-        abort(422)
+#     try:
+#         cupcakes = Cupcake.query.all()
+#     except DatabaseError:
+#         abort(422)
 
-    cupcake_id_list = []
-    for c in cupcakes:
-        cupcake_id_list.append(c.id)
+#     cupcake_id_list = []
+#     for c in cupcakes:
+#         cupcake_id_list.append(c.id)
 
-    if id in cupcake_id_list:
-        return True
-    else:
-        return False
+#     if id in cupcake_id_list:
+#         return True
+#     else:
+#         return False
+
+# -----------------------------------------------------------------------------------
+#  Since the specified cupcake is about to have its ingredients reset, first
+#  update the usage_counts of the ingredients that it will no longer be associated
+#  with.
+# -----------------------------------------------------------------------------------
+def update_ingredient_usage_counts(the_cupcake):
+
+    for i in the_cupcake.ingredients:
+        i.usage_count = i.usage_count - 1
+        try:
+            i.update()
+        except DatabaseError:
+            print("unable to update ingredient usage_count")
+            abort(422)
+
 
 def attach_new_ingredients_to_cupcake(ingredients, the_cupcake):
 
@@ -32,7 +48,7 @@ def attach_new_ingredients_to_cupcake(ingredients, the_cupcake):
         if the_ingredient is None:
             # create the ingredient
             try:
-                new_ingredient = Ingredient(name=i['name'], kind=i['kind'])
+                new_ingredient = Ingredient(name=i['name'], kind=i['kind'], usage_count=1)
                 new_ingredient.insert()
                 the_cupcake.ingredients.append(new_ingredient)
             except DatabaseError:
@@ -40,6 +56,12 @@ def attach_new_ingredients_to_cupcake(ingredients, the_cupcake):
                 abort(422)
         else:
             the_cupcake.ingredients.append(the_ingredient)
+            the_ingredient.usage_count = the_ingredient.usage_count + 1
+            try:
+                the_ingredient.update()
+            except DatabaseError:
+                print("unable to update ingredient")
+                abort(422)
 
         the_cupcake.update()
 
@@ -153,28 +175,42 @@ def create_app(test_config=None):
         if not request.json:
             abort(400)
 
-        if not is_valid_cupcake(id):
-            abort(404)
+        # if not is_valid_cupcake(id):
+        #     abort(404)
 
-        the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
+        try:
+            the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
+        except DatabaseError:
+            print("unable to query database")
+            abort(422)
+
+        if the_cupcake is None:
+            abort(404)
 
         try:
             name = request.get_json()['name']
             description = request.get_json()['description']
             ingredients = request.get_json()['ingredients']
-        except:
+        except KeyError:
             abort(400)
 
         if name and name is not None:
+            # check if new name is already taken
+            try:
+                cc_same_name = Cupcake.query.filter_by(name=name).one_or_none()
+            except DatabaseError:
+                abort(422)
+            if cc_same_name is not None:
+                print("a cupcake of same name already exists")
+                abort(400)
             the_cupcake.name = name
 
         if description and description is not None:
-            the_cupcake.description = description
-        
-        # remove ingredients from cupcake, then add them back
-        the_cupcake.ingredients = []
+            the_cupcake.description = description        
 
         if ingredients:
+            update_ingredient_usage_counts(the_cupcake)
+            the_cupcake.ingredients = []    # remove any old ingredients       
             attach_new_ingredients_to_cupcake(ingredients, the_cupcake)
             # cupcake should get updated in attach_new_ingredients
 
