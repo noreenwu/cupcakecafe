@@ -21,6 +21,28 @@ def is_valid_cupcake(id):
     else:
         return False
 
+def create_new_ingredients(ingredients, new_cupcake):
+
+    for i in ingredients:
+        try:
+            the_ingredient = Ingredient.query.filter_by(kind=i['kind']).filter_by(name=i['name']).one_or_none()
+        except DatabaseError:
+            print("unable to query ingredients")
+            abort(422)
+        if the_ingredient is None:
+            # create the ingredient
+            try:
+                new_ingredient = Ingredient(name=i['name'], kind=i['kind'])
+                new_ingredient.insert()
+                new_cupcake.ingredients.append(new_ingredient)
+            except DatabaseError:
+                print("unable to create new ingredient")
+                abort(422)
+        else:
+            new_cupcake.ingredients.append(the_ingredient)
+
+        new_cupcake.update()
+    
 
 def create_app(test_config=None):
 
@@ -72,6 +94,11 @@ def create_app(test_config=None):
         return jsonify({"success": True, "cupcake": the_cupcake.long()}), 200
 
 
+# ---------------------------------------------------------------------------
+#  Create a new cupcake with specified name and description.
+#  If ingredients are included, check to see if they exist; if not, create
+#  Associate the specified ingredients with the newly created cupcake.
+# ---------------------------------------------------------------------------
     @app.route('/cupcakes', methods=['POST'])
     def add_cupcake():
         print("add cupcake")
@@ -80,6 +107,7 @@ def create_app(test_config=None):
 
         name = request.get_json()['name']
         description = request.get_json()['description']
+        ingredients = request.get_json()['ingredients']
 
         if name is None:
             abort(400)
@@ -89,6 +117,10 @@ def create_app(test_config=None):
 
         new_cupcake = Cupcake(name=name, description=description)
 
+        if ingredients:
+            create_new_ingredients(ingredients, new_cupcake)
+
+
         try:
             new_cupcake.insert()
         except DatabaseError:
@@ -97,6 +129,12 @@ def create_app(test_config=None):
         return jsonify({'success': True, "cupcakes": new_cupcake.long()}), 200
 
 
+# ---------------------------------------------------------------------------
+#  Update the specified cupcake with specified name and description.
+#  If ingredients are included in the body, then update them, creating
+#  new ingredients as needed. If not included, then do not change what
+#  may already be associated with the cupcake
+# ---------------------------------------------------------------------------
     @app.route('/cupcakes/<int:id>', methods=['PATCH'])
     def update_cupcake(id):
         print ("update cupcake")
