@@ -21,7 +21,7 @@ def is_valid_cupcake(id):
     else:
         return False
 
-def attach_new_ingredients_to_cupcake(ingredients, new_cupcake):
+def attach_new_ingredients_to_cupcake(ingredients, the_cupcake):
 
     for i in ingredients:
         try:
@@ -34,15 +34,15 @@ def attach_new_ingredients_to_cupcake(ingredients, new_cupcake):
             try:
                 new_ingredient = Ingredient(name=i['name'], kind=i['kind'])
                 new_ingredient.insert()
-                new_cupcake.ingredients.append(new_ingredient)
+                the_cupcake.ingredients.append(new_ingredient)
             except DatabaseError:
                 print("unable to create new ingredient")
                 abort(422)
         else:
-            new_cupcake.ingredients.append(the_ingredient)
+            the_cupcake.ingredients.append(the_ingredient)
 
-        new_cupcake.update()
-    
+        the_cupcake.update()
+
 
 def create_app(test_config=None):
 
@@ -142,9 +142,9 @@ def create_app(test_config=None):
 
 # ---------------------------------------------------------------------------
 #  Update the specified cupcake with specified name and description.
-#  If ingredients are included in the body, then update them, creating
-#  new ingredients as needed. If not included, then do not change what
-#  may already be associated with the cupcake
+#  Cannot have optional ingredients, so ingredients will have to be 
+#  specified. If ingredient list is not available, then the empty array 
+#  should be specified.
 # ---------------------------------------------------------------------------
     @app.route('/cupcakes/<int:id>', methods=['PATCH'])
     def update_cupcake(id):
@@ -160,6 +160,7 @@ def create_app(test_config=None):
 
         name = request.get_json()['name']
         description = request.get_json()['description']
+        ingredients = request.get_json()['ingredients']
 
         if name and name is not None:
             the_cupcake.name = name
@@ -167,11 +168,19 @@ def create_app(test_config=None):
         if description and description is not None:
             the_cupcake.description = description
         
-        try:
-            the_cupcake.update()
-        except DatabaseError:
-            print ("could not update the cupcake")
-            abort(422)
+        # remove ingredients from cupcake, then add them back
+        the_cupcake.ingredients = []
+
+        if ingredients:
+            attach_new_ingredients_to_cupcake(ingredients, the_cupcake)
+            # cupcake should get updated in attach_new_ingredients
+
+
+        # try:
+        #     the_cupcake.update()
+        # except DatabaseError:
+        #     print ("could not update the cupcake")
+        #     abort(422)
     
         return jsonify({"success": True, "cupcake": the_cupcake.long()}), 200
 
