@@ -21,7 +21,7 @@ def is_valid_cupcake(id):
     else:
         return False
 
-def create_new_ingredients(ingredients, new_cupcake):
+def attach_new_ingredients_to_cupcake(ingredients, new_cupcake):
 
     for i in ingredients:
         try:
@@ -115,10 +115,21 @@ def create_app(test_config=None):
         if description is None:
             description = ''
 
+        # check if cupcake of specified name already exists
+        try:
+            the_cupcake = Cupcake.query.filter_by(name=name).one_or_none()
+        except DatabaseError:
+            print("error querying for existence of specified cupcake")
+            abort(422)
+
+        if the_cupcake is not None:
+            print("a cupcake of the specified name already exists")
+            abort(400)
+
         new_cupcake = Cupcake(name=name, description=description)
 
         if ingredients:
-            create_new_ingredients(ingredients, new_cupcake)
+            attach_new_ingredients_to_cupcake(ingredients, new_cupcake)
 
 
         try:
