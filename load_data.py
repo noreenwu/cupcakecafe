@@ -51,8 +51,15 @@ cupcake2 = Cupcake(name="Chocolate Top to Bottom",
                    description="chocolate frosting on chocolate cake with chocolate chip topping")
 
 cupcake1.ingredients.append(ingredient1)
+ingredient1.usage_count = ingredient1.usage_count + 1
 cupcake1.ingredients.append(ingredient2)
+ingredient2.usage_count = ingredient2.usage_count + 1
 cupcake1.ingredients.append(ingredient3)
+ingredient3.usage_count = ingredient3.usage_count + 1
+
+ingredient1.update()
+ingredient2.update()
+ingredient3.update()
 db.session.add(cupcake1)
 db.session.add(cupcake2)
 
