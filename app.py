@@ -158,9 +158,12 @@ def create_app(test_config=None):
 
         the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
 
-        name = request.get_json()['name']
-        description = request.get_json()['description']
-        ingredients = request.get_json()['ingredients']
+        try:
+            name = request.get_json()['name']
+            description = request.get_json()['description']
+            ingredients = request.get_json()['ingredients']
+        except:
+            abort(400)
 
         if name and name is not None:
             the_cupcake.name = name
