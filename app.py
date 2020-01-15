@@ -41,6 +41,12 @@ def attach_new_ingredients_to_cupcake(ingredients, the_cupcake):
 
     for i in ingredients:
         try:
+            i['name']
+            i['kind']
+        except KeyError:
+            print("could not get name or kind of ingredient from input")
+            abort(400)        
+        try:
             the_ingredient = Ingredient.query.filter_by(kind=i['kind']).filter_by(name=i['name']).one_or_none()
         except DatabaseError:
             print("unable to query ingredients")
