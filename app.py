@@ -96,7 +96,7 @@ def create_app(test_config=None):
         for c in cupcakes:
             clist.append(c.long())
 
-        return jsonify(clist), 200
+        return jsonify({"success": True, "cupcakes": clist}), 200
 
 
     @app.route('/cupcakes/<int:id>')
