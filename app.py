@@ -118,8 +118,9 @@ def create_app(test_config=None):
 
         if the_cupcake is None:
             abort(404)
-        
-        return jsonify({"success": True, "cupcake": the_cupcake.long()}), 200
+        clist = []
+        clist.append(the_cupcake.long())
+        return jsonify({"success": True, "cupcakes": clist}), 200
 
 
 # ---------------------------------------------------------------------------
@@ -221,9 +222,10 @@ def create_app(test_config=None):
         if description and description is not None:
             the_cupcake.description = description        
 
-        if ingredients:
-            update_ingredient_usage_counts(the_cupcake)
-            the_cupcake.ingredients = []    # remove any old ingredients       
+        # if no ingredients are specified, usage_counts are updated and cupcake's ingredients are reset
+        update_ingredient_usage_counts(the_cupcake)
+        the_cupcake.ingredients = []    # remove any old ingredients   
+        if ingredients:    
             attach_new_ingredients_to_cupcake(ingredients, the_cupcake)
             # cupcake should get updated in attach_new_ingredients
 
@@ -233,8 +235,9 @@ def create_app(test_config=None):
         # except DatabaseError:
         #     print ("could not update the cupcake")
         #     abort(422)
-    
-        return jsonify({"success": True, "cupcake": the_cupcake.long()}), 200
+        clist = [the_cupcake.long()]
+        
+        return jsonify({"success": True, "cupcakes": clist }), 200
 
 
     @app.route('/cupcakes/<int:id>', methods=['DELETE'])
