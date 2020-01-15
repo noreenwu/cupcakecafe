@@ -127,15 +127,22 @@ def create_app(test_config=None):
         if not request.json:
             abort(400)
 
-        name = request.get_json()['name']
-        description = request.get_json()['description']
-        ingredients = request.get_json()['ingredients']
-
-        if name is None:
+        try:
+            name = request.get_json()['name']
+            description = request.get_json()['description']
+            ingredients = request.get_json()['ingredients']
+        except KeyError:
+            print("could not get name, description or ingredients from input")
             abort(400)
 
-        if description is None:
+        if not name or name is None:
+            abort(400)
+
+        if not description or description is None:
             description = ''
+
+        if not ingredients or ingredients is None:
+            ingredients = []
 
         # check if cupcake of specified name already exists
         try:
@@ -262,10 +269,14 @@ def create_app(test_config=None):
         if not request.json:
             abort(400)
 
-        name = request.get_json()['name']
-        kind = request.get_json()['kind']
+        try:
+            name = request.get_json()['name']
+            kind = request.get_json()['kind']
+        except KeyError:
+            print("could not get values name or kind from input")
+            abort(400)
 
-        if name is None or kind is None:
+        if not name or name is None or not kind or kind is None:
             abort(400)
 
         new_ingredient = Ingredient(name=name, kind=kind)
@@ -284,8 +295,12 @@ def create_app(test_config=None):
         if not request.json:
             abort(400)
             
-        name = request.get_json()['name']
-        kind = request.get_json()['kind']
+        try:
+            name = request.get_json()['name']
+            kind = request.get_json()['kind']
+        except KeyError:
+            print("could not get values name or kind from input")
+            abort(400)
 
         try:
             the_ingredient = Ingredient.query.filter_by(id=id).one_or_none()
