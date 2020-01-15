@@ -204,7 +204,7 @@ def create_app(test_config=None):
         if name and name is not None:
             # check if new name is already taken
             try:
-                cc_same_name = Cupcake.query.filter_by(name=name).one_or_none()
+                cc_same_name = Cupcake.query.filter_by(name=name).filter(id!=the_cupcake.id).one_or_none()
             except DatabaseError:
                 abort(422)
             if cc_same_name is not None:
