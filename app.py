@@ -228,11 +228,13 @@ def create_app(test_config=None):
     def delete_cupcake(id):
         print("delete cupcake")
 
-        if not is_valid_cupcake(id):
-            abort(404)
+        # if not is_valid_cupcake(id):
+        #     abort(404)
         
         try:
             the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
+            if the_cupcake is None:
+                abort(404)
             the_cupcake.delete()
         except DatabaseError:
             print("Error occurred while trying to delete the cupcake")
