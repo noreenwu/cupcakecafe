@@ -102,8 +102,8 @@ def create_app(test_config=None):
     @app.route('/cupcakes/<int:id>')
     def get_cupcake_detail(id):
 
-        if not is_valid_cupcake(id):
-            abort(404)
+        # if not is_valid_cupcake(id):
+        #     abort(404)
 
         try:
             the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
