@@ -169,6 +169,24 @@ class CupcakeTests(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)                                  
 
+    # test getting orders
+    def test_get_orders(self):
+        print ("test GET orders")
+        res = self.client().get('/orders')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['orders'])        
+        self.assertEqual(data['success'], True)
+
+    def test_get_specific_order(self):
+        print ("test GET specific order")
+        res = self.client().get('/orders/1')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['orders'])        
+        self.assertEqual(data['success'], True)
 
 
 # Make the tests conveniently executable
