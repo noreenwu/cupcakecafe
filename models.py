@@ -126,7 +126,7 @@ class Order(db.Model):
 
     id = Column(Integer, primary_key=True)
     customer_name = Column(String, nullable=False)
-    order_items = db.relationship('OrderItem', backref=db.backref('order'), lazy=True)
+    order_items = db.relationship('OrderItem', cascade="all,delete", backref=db.backref('order'), lazy=True)
 
     def format(self):
 
@@ -148,7 +148,10 @@ class Order(db.Model):
         db.session.add(self)
         db.session.commit()
 
-
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        
 class OrderItem(db.Model):
     __tablename__ = 'OrderItem'
 

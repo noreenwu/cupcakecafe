@@ -5,8 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 from app import create_app
-from models import Ingredient, setup_db
-from models import Cupcake
+from models import Ingredient, setup_db, Cupcake, Order
+# from models import Cupcake
 
 
 class CupcakeTests(unittest.TestCase):
@@ -196,6 +196,25 @@ class CupcakeTests(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
+
+    # test deleting an order, and check that it was really deleted
+    def test_delete_cupcake(self):
+        res = self.client().delete('/orders/6')
+        data = json.loads(res.data)
+
+        the_order = Order.query.filter_by(id=6).one_or_none()
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertEqual(the_order, None)
+
+    def test_delete_non_existent_order(self):
+        res = self.client().delete('/orders/555')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)       
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":

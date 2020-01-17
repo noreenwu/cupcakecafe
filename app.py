@@ -241,9 +241,6 @@ def create_app(test_config=None):
     @app.route('/cupcakes/<int:id>', methods=['DELETE'])
     def delete_cupcake(id):
         print("delete cupcake")
-
-        # if not is_valid_cupcake(id):
-        #     abort(404)
         
         try:
             the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
@@ -361,6 +358,23 @@ def create_app(test_config=None):
             abort(404)
         orderlist = [the_order.format()]
         return jsonify({"success": True, "orders": orderlist}), 200
+
+
+    @app.route('/orders/<int:id>', methods=['DELETE'])
+    def delete_order(id):
+        print("delete order")
+        
+        try:
+            the_order = Order.query.filter_by(id=id).one_or_none()
+            if the_order is None:
+                abort(404)
+            the_order.delete()  # should cascade delete all associated OrderItems
+        except DatabaseError:
+            print("Error occurred while trying to delete the cupcake")
+            abort(422)
+
+        return jsonify({"success": True, "delete": id}), 200
+
 
     @app.errorhandler(422)
     def cannot_process(error):
