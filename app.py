@@ -29,7 +29,8 @@ from sqlalchemy.exc import DatabaseError
 def update_ingredient_usage_counts(the_cupcake):
 
     for i in the_cupcake.ingredients:
-        i.usage_count = i.usage_count - 1
+        if i.usage_count > 0:
+            i.usage_count = i.usage_count - 1
         try:
             i.update()
         except DatabaseError:
