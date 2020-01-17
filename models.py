@@ -103,7 +103,8 @@ class Ingredient(db.Model):
         return {
           'id': self.id,
           'kind': self.kind,
-          'name': self.name}
+          'name': self.name,
+          'usage_count': self.usage_count}
 
     def insert(self):
         db.session.add(self)
@@ -118,4 +119,43 @@ class Ingredient(db.Model):
 
     def __repr__(self):
         return f'<Ingredient {self.id}, {self.name}>'
+
+class Order(db.Model):
+    __tablename__ = 'Order'
+
+    id = Column(Integer, primary_key=True)
+    customer_name = Column(String, nullable=False)
+    order_items = db.relationship('OrderItem', backref=db.backref('order'), lazy=True)
+
+    def format(self):
+        return {
+          'id': self.id,
+          'customer_name': self.customer_name
+        }
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+class OrderItem(db.Model):
+    __tablename__ = 'OrderItem'
+
+    id = Column(Integer, primary_key=True)
+    cupcake_id = db.Column(db.Integer, db.ForeignKey('Cupcake.id'))
+    quantity = db.Column(db.Integer, default=0)
+    order_id = db.Column(db.Integer, db.ForeignKey('Order.id'))
+
+    def format(self):
+        return {
+          'id': self.id,
+          'cupcake_id': self.cupcake_id,
+          'quantity': self.quantity,
+          'order_id': self.order_id
+        }
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+    
 

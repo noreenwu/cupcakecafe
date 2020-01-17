@@ -11,6 +11,19 @@ app = create_app()
 app.app_context().push()
 
 
+# delete orders and order items
+
+order_items = OrderItem.query.all()
+for oi in order_items:
+    db.session.delete(oi)
+db.session.commit()
+
+orders = Order.query.all()
+for o in orders:
+    db.session.delete(o)
+
+db.session.commit()   
+
 ingredients = Ingredient.query.all()
 
 for i in ingredients:
@@ -68,3 +81,17 @@ db.session.commit()
 # get new data 
 cupcakes = Cupcake.query.all()
 ingredients = Ingredient.query.all()
+
+
+# orders 
+
+
+order1 = Order(customer_name="Noreen")
+order1.insert()
+
+classic_cupcake = Cupcake.query.filter_by(name="Classic").first()
+an_order = Order.query.filter_by(customer_name="Noreen").first()
+
+order_item1 = OrderItem(cupcake_id=classic_cupcake.id, order_id=an_order.id, quantity=30)
+order_item1.insert()
+
