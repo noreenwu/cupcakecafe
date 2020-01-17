@@ -85,13 +85,16 @@ ingredients = Ingredient.query.all()
 
 # orders 
 
-
 order1 = Order(customer_name="Noreen")
 order1.insert()
 
 classic_cupcake = Cupcake.query.filter_by(name="Classic").first()
+top_bottom = Cupcake.query.filter_by(name="Chocolate Top to Bottom").first()
 an_order = Order.query.filter_by(customer_name="Noreen").first()
 
+
 order_item1 = OrderItem(cupcake_id=classic_cupcake.id, order_id=an_order.id, quantity=30)
+order_item2 = OrderItem(cupcake_id=top_bottom.id, order_id=an_order.id, quantity=15)
 order_item1.insert()
+order_item2.insert()
 

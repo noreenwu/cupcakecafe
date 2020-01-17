@@ -109,9 +109,6 @@ def create_app(test_config=None):
     @app.route('/cupcakes/<int:id>')
     def get_cupcake_detail(id):
 
-        # if not is_valid_cupcake(id):
-        #     abort(404)
-
         try:
             the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
         except DatabaseError:
@@ -350,6 +347,20 @@ def create_app(test_config=None):
             order_list.append(o.format())
 
         return jsonify({"success": True, "orders": order_list}), 200
+
+    # get a specific order
+    @app.route('/orders/<int:id>', methods=['GET'])
+    def get_orders_detail(id):
+
+        try:
+            the_order = Order.query.filter_by(id=id).one_or_none()
+        except DatabaseError:
+            abort(422)
+
+        if the_order is None:
+            abort(404)
+        orderlist = [the_order.format()]
+        return jsonify({"success": True, "orders": orderlist}), 200
 
     @app.errorhandler(422)
     def cannot_process(error):
