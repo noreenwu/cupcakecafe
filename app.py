@@ -336,6 +336,21 @@ def create_app(test_config=None):
         return jsonify({'success': True, "cupcake": the_ingredient.format()}), 200
 
 
+    # orders
+    @app.route('/orders', methods=['GET'])
+    def get_orders():
+        try:
+            orders = Order.query.all()
+        except DatabaseError:
+            abort(422)
+
+        print("orders")
+        order_list = []
+        for o in orders:
+            order_list.append(o.format())
+
+        return jsonify({"success": True, "orders": order_list}), 200
+
     @app.errorhandler(422)
     def cannot_process(error):
         return jsonify({

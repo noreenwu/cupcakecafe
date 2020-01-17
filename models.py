@@ -53,6 +53,7 @@ class Cupcake(db.Model):
   description = Column(String)
   ingredients = db.relationship('Ingredient', secondary=cupcake_ingredient,
                                               backref=db.backref('cupcakes'), lazy=True)
+  order_items = db.relationship('OrderItem', backref=db.backref('cupcake'), lazy=True)                                              
 
 
   def short(self):
@@ -128,9 +129,19 @@ class Order(db.Model):
     order_items = db.relationship('OrderItem', backref=db.backref('order'), lazy=True)
 
     def format(self):
+
+        order_item_list = []
+        for oi in self.order_items:
+            order_item_list.append(
+                {'cupcake_id': oi.cupcake_id,
+                 'cupcake_name': oi.cupcake.name,
+                 'quantity': oi.quantity}
+            )
+
         return {
           'id': self.id,
-          'customer_name': self.customer_name
+          'customer_name': self.customer_name,
+          'order_items': order_item_list
         }
 
     def insert(self):
@@ -158,4 +169,5 @@ class OrderItem(db.Model):
         db.session.add(self)
         db.session.commit()
     
-
+    def __repr__(self):
+        return f'<OrderItem {self.id}, {self.cupcake_id}, {self.quantity}>'
