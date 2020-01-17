@@ -57,7 +57,7 @@ class CupcakeTests(unittest.TestCase):
     # test getting a non-existent cupcake returns 404
     def test_get_non_existent_cupcake(self):
         print ("test GET non-existent cupcake returns 404")
-        res = self.client().get('cupcakes/999')
+        res = self.client().get('/cupcakes/999')
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
@@ -181,13 +181,21 @@ class CupcakeTests(unittest.TestCase):
 
     def test_get_specific_order(self):
         print ("test GET specific order")
-        res = self.client().get('/orders/1')
+        res = self.client().get('/orders/4')
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['orders'])        
         self.assertEqual(data['success'], True)
 
+
+    # test getting a non-existent order returns 404
+    def test_get_non_existent_order(self):
+        print ("test GET non-existent order returns 404")
+        res = self.client().get('/orders/999')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
