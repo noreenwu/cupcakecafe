@@ -73,6 +73,42 @@ def attach_new_ingredients_to_cupcake(ingredients, the_cupcake):
         the_cupcake.update()
 
 
+def get_order_items_db(order_items, order_id):
+    orders_db_form = []
+
+    for o in order_items:
+        try:
+            cc_id = o['cupcake_id']
+            quant = o['quantity']
+            print("cupcake id was ", cc_id)
+            print("quantity specified was ", quant)
+            print("and the order id was ", order_id)
+        except KeyError:
+            print("could not get cupcake_id or quantity from input")
+            abort(400)
+
+        # ensure that the specified cupcake id actually exists
+        try:
+            valid_cupcake = Cupcake.query.filter_by(id=cc_id).one_or_none()
+        except DatabaseError:
+            abort(422)
+
+        if valid_cupcake is None:  # specified cupcake doesn't exist
+            abort(400)
+
+        try:
+            new_order_item = OrderItem(cupcake_id=cc_id, quantity=quant, order_id=order_id)
+            new_order_item.insert()
+
+        except DatabaseError:
+            print("could not insert new order item")
+            abort(422)
+
+        orders_db_form.append(new_order_item)
+
+    return (orders_db_form)
+    
+
 def create_app(test_config=None):
 
     app = Flask(__name__)
@@ -374,6 +410,40 @@ def create_app(test_config=None):
             abort(422)
 
         return jsonify({"success": True, "delete": id}), 200
+
+
+    @app.route('/orders', methods=['POST'])
+    def create_order():
+
+        print("create order")
+        if not request.json:
+            abort(400)
+
+        try:
+            customer_name = request.get_json()['customer_name']
+            order_items = request.get_json()['order_items']
+        except KeyError:
+            print("could not get values customer_name or order_values from input")
+            abort(400)
+
+        if not customer_name or customer_name is None or not order_items or order_items is None:
+            abort(400)
+
+        try:
+            new_order = Order(customer_name=customer_name)  # add order_items after; they need the order_id
+            new_order.insert()
+        except DatabaseError:
+            print("could not insert new order")
+            abort(422)
+            
+
+        db_order_items = get_order_items_db(order_items, new_order.id)
+        if len(db_order_items) == 0:
+            print("no order items for this order")
+            abort(400)
+
+        return jsonify({'success': True,
+                        'orders': new_order.format()}), 200
 
 
     @app.errorhandler(422)
