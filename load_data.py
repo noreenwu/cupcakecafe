@@ -98,3 +98,8 @@ order_item2 = OrderItem(cupcake_id=top_bottom.id, order_id=an_order.id, quantity
 order_item1.insert()
 order_item2.insert()
 
+another_order = Order(customer_name="Sneezy")
+another_order.insert()
+order_item3 = OrderItem(cupcake_id=top_bottom.id, order_id=another_order.id, quantity=25)
+order_item3.insert()
+
