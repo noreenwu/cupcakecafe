@@ -151,6 +151,9 @@ class Order(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+    def update(self):
+        db.session.commit()
         
 class OrderItem(db.Model):
     __tablename__ = 'OrderItem'
@@ -172,5 +175,12 @@ class OrderItem(db.Model):
         db.session.add(self)
         db.session.commit()
     
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()        
+                    
     def __repr__(self):
         return f'<OrderItem {self.id}, {self.cupcake_id}, {self.quantity}>'

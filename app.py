@@ -109,6 +109,12 @@ def get_order_items_db(order_items, order_id):
     return (orders_db_form)
     
 
+def del_old_order_items(order_items):
+
+    for o in order_items:
+        o.delete()
+
+
 def create_app(test_config=None):
 
     app = Flask(__name__)
@@ -258,7 +264,7 @@ def create_app(test_config=None):
 
         # if no ingredients are specified, usage_counts are updated and cupcake's ingredients are reset
         update_ingredient_usage_counts(the_cupcake)
-        the_cupcake.ingredients = []    # remove any old ingredients   
+        the_cupcake.ingredients = []    # remove any old ingredients (disassociate from this cupcake)
         if ingredients:    
             attach_new_ingredients_to_cupcake(ingredients, the_cupcake)
             # cupcake should get updated in attach_new_ingredients
@@ -363,7 +369,7 @@ def create_app(test_config=None):
             abort(422)
 
         print("updated the ingredient")
-        return jsonify({'success': True, "cupcake": the_ingredient.format()}), 200
+        return jsonify({'success': True, "ingredients": the_ingredient.format()}), 200
 
 
     # orders
@@ -445,6 +451,48 @@ def create_app(test_config=None):
         return jsonify({'success': True,
                         'orders': new_order.format()}), 200
 
+
+    @app.route('/orders/<int:id>', methods=['PATCH'])
+    def update_specific_order(id):
+        if not request.json:
+            abort(400)
+            
+        try:
+            customer_name = request.get_json()['customer_name']
+            order_items = request.get_json()['order_items']
+        except KeyError:
+            print("could not get values customer_name or order_items from input")
+            abort(400)
+
+        try:
+            the_order = Order.query.filter_by(id=id).one_or_none()
+        except DatabaseError:
+            abort(422)
+
+        if the_order is None:   # order not found
+            abort(404)
+
+        if len(order_items) == 0:
+            print("no order items specified")
+            abort(400)  # abort and don't change anything
+
+        if customer_name and customer_name is not None:
+            the_order.customer_name = customer_name
+        
+        if order_items and order_items is not None:
+            # delete the old order_items associated with this order
+            del_old_order_items(the_order.order_items)
+            the_order.order_items = []
+            db_order_items = get_order_items_db(order_items, the_order.id)  # associate new order items
+
+        try:
+            the_order.update()
+        except DatabaseError:
+            print("unable to update the order")
+            abort(422)
+
+        print("updated the order")
+        return jsonify({'success': True, "orders": the_order.format()}), 200
 
     @app.errorhandler(422)
     def cannot_process(error):
