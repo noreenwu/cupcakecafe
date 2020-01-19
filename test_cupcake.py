@@ -270,12 +270,41 @@ class CupcakeTests(unittest.TestCase):
 
 
     # test updating an order
+    def test_update_order(self):
+        res = self.client().patch('/orders/10', 
+                                  json = {"customer_name": "Mr. Customer", "order_items": [{'cupcake_id': 14, 'quantity': 10}]})
+
+        data = json.loads(res.data)
+        the_order = (Order.query
+                          .filter(Order.id==10)
+                          .first()
+        )
+        the_order_item = (OrderItem.query
+                                   .filter_by(order_id=the_order.id).one_or_none
+        )
+        self.assertEqual(the_order.format()['customer_name'], 'Mr. Customer')
+        self.assertTrue(the_order_item)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)    
 
     # test updating a non-existent order
+    def test_update_order_non_existent(self):
+        res = self.client().patch('/orders/120', 
+                                  json = {"customer_name": "Mr. Customer", "order_items": [{'cupcake_id': 14, 'quantity': 10}]})
 
-    # test updating an order (invalid data)
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)   
 
+    # test updating an order (invalid data: no customer name specified)
+    def test_update_order_bad_data(self):
+        res = self.client().patch('/orders/10', 
+                                  json = {"order_items": [{'cupcake_id': 14, 'quantity': 10}]})
 
+        data = json.loads(res.data)        
+
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data['success'], False)    
 
 
 # Make the tests conveniently executable
