@@ -215,6 +215,43 @@ class CupcakeTests(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)       
 
+    # test posting an order
+    def test_create_order(self):
+        res = (
+            self.client()
+                .post('/orders',
+                      json={'customer_name': 'New Order',
+                            'order_items': [{'cupcake_id': 1, 'quantity': 30}]
+                      })
+        )
+        data = json.loads(res.data)
+        # verify that it was created in the database
+        the_order = (Order.query
+                          .filter_by(name='New Order')  
+                          .first()
+        )
+        the_order_item = (Order_item.query
+                                    .filter_by(cupcake_id=1)
+                                    .filter_by(quantity=30)
+        )
+
+        self.assertTrue(the_order is not None)
+        self.assertTrue(the_order_item is not None)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['orders'])
+
+    # test posting an order (invalid data)
+
+
+    # test updating an order
+
+    # test updating a non-existent order
+
+    # test updating an order (invalid data)
+
+
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":

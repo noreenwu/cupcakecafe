@@ -114,6 +114,27 @@ def del_old_order_items(order_items):
     for o in order_items:
         o.delete()
 
+def is_valid_order_items(order_items):
+    # cycle through the order items and verify that they were specified correctly
+    # and that the cupcake id is in the database
+
+    for o in order_items:
+        try:
+            ccid = o['cupcake_id']
+            o['quantity']
+        except KeyError:
+            print("invalid order_items specification")
+            abort(422)
+        try:
+            cupcake = Cupcake.query.filter_by(id=ccid).one_or_none()
+        except DatabaseError:
+            print("unable to query for cupcake while checking order_items")
+            abort(422)
+        if cupcake is None:
+            return False   # order_items were not specified correctly
+
+    return True
+    
 
 def create_app(test_config=None):
 
@@ -435,6 +456,9 @@ def create_app(test_config=None):
         if not customer_name or customer_name is None or not order_items or order_items is None:
             abort(400)
 
+        if not is_valid_order_items(order_items):
+            abort(400)
+
         try:
             new_order = Order(customer_name=customer_name)  # add order_items after; they need the order_id
             new_order.insert()
@@ -442,7 +466,6 @@ def create_app(test_config=None):
             print("could not insert new order")
             abort(422)
             
-
         db_order_items = get_order_items_db(order_items, new_order.id)
         if len(db_order_items) == 0:
             print("no order items for this order")
