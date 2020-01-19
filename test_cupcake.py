@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 from app import create_app
-from models import Ingredient, setup_db, Cupcake, Order
+from models import Ingredient, setup_db, Cupcake, Order, OrderItem
 # from models import Cupcake
 
 
@@ -230,9 +230,9 @@ class CupcakeTests(unittest.TestCase):
                           .filter_by(name='New Order')  
                           .first()
         )
-        the_order_item = (Order_item.query
-                                    .filter_by(cupcake_id=1)
-                                    .filter_by(quantity=30)
+        the_order_item = (OrderItem.query
+                                   .filter_by(cupcake_id=1)
+                                   .filter_by(quantity=30)
         )
 
         self.assertTrue(the_order is not None)
@@ -241,7 +241,32 @@ class CupcakeTests(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['orders'])
 
-    # test posting an order (invalid data)
+    # test posting an order (invalid data: bad cupcake id)
+    def test_create_order_with_bad_data(self):
+        res = (
+            self.client()
+                .post('/orders',
+                      json={'customer_name': 'New Order',
+                            'order_items': [{'cupcake_id': 901, 'quantity': 30}]
+                      })
+        )
+        data = json.loads(res.data)        
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data['success'], False)
+
+
+    # test posting an order (invalid data: improperly specified order_items, missing quantity)
+    def test_create_order_with_bad_data2(self):
+        res = (
+            self.client()
+                .post('/orders',
+                      json={'customer_name': 'New Order',
+                            'order_items': [{'cupcake_id': 14}]
+                      })
+        )
+        data = json.loads(res.data)        
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data['success'], False)   
 
 
     # test updating an order
