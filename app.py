@@ -3,23 +3,11 @@ from flask import Flask, request, jsonify, abort
 from models import *
 from flask_cors import CORS
 import json
+from functools import wraps
 from sqlalchemy.exc import DatabaseError
 
-# def is_valid_cupcake(id):
+from auth import AuthError, requires_auth
 
-#     try:
-#         cupcakes = Cupcake.query.all()
-#     except DatabaseError:
-#         abort(422)
-
-#     cupcake_id_list = []
-#     for c in cupcakes:
-#         cupcake_id_list.append(c.id)
-
-#     if id in cupcake_id_list:
-#         return True
-#     else:
-#         return False
 
 # -----------------------------------------------------------------------------------
 #  Since the specified cupcake is about to have its ingredients reset, first
@@ -190,7 +178,8 @@ def create_app(test_config=None):
 #  Associate the specified ingredients with the newly created cupcake.
 # ---------------------------------------------------------------------------
     @app.route('/cupcakes', methods=['POST'])
-    def add_cupcake():
+    @requires_auth('post:cupcakes')
+    def add_cupcake(f):
         print("add cupcake")
         if not request.json:
             abort(400)
