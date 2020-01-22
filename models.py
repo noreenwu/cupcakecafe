@@ -53,7 +53,7 @@ class Cupcake(db.Model):
   description = Column(String)
   ingredients = db.relationship('Ingredient', secondary=cupcake_ingredient,
                                               backref=db.backref('cupcakes'), lazy=True)
-  order_items = db.relationship('OrderItem', backref=db.backref('cupcake'), lazy=True)                                              
+  order_items = db.relationship('OrderItem', cascade="all,delete", backref=db.backref('cupcake'), lazy=True)                                              
 
 
   def short(self):
@@ -154,7 +154,7 @@ class Order(db.Model):
 
     def update(self):
         db.session.commit()
-        
+
 class OrderItem(db.Model):
     __tablename__ = 'OrderItem'
 
