@@ -308,7 +308,8 @@ def create_app(test_config=None):
         return jsonify({"success": True, "delete": id}), 200
 
     @app.route('/ingredients')
-    def get_ingredients():
+    @requires_auth('get:ingredients')    
+    def get_ingredients(f):
         try:
             ingredients = Ingredient.query.all()
         except DatabaseError:
@@ -321,7 +322,8 @@ def create_app(test_config=None):
         return jsonify(ilist)
 
     @app.route('/ingredients', methods=['POST'])
-    def create_ingredient():
+    @requires_auth('post:ingredients')     
+    def create_ingredient(f):
 
         print("create ingredient")
         if not request.json:
@@ -349,7 +351,8 @@ def create_app(test_config=None):
 
 
     @app.route('/ingredients/<int:id>', methods=['PATCH'])
-    def update_ingredient_name(id):
+    @requires_auth('patch:ingredients')    
+    def update_ingredient_name(f, id):
         if not request.json:
             abort(400)
             
@@ -386,7 +389,8 @@ def create_app(test_config=None):
 
     # orders
     @app.route('/orders', methods=['GET'])
-    def get_orders():
+    @requires_auth('get:orders')       
+    def get_orders(f):
         try:
             orders = Order.query.all()
         except DatabaseError:
