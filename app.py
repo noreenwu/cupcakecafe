@@ -233,7 +233,8 @@ def create_app(test_config=None):
 #  should be specified.
 # ---------------------------------------------------------------------------
     @app.route('/cupcakes/<int:id>', methods=['PATCH'])
-    def update_cupcake(id):
+    @requires_auth('patch:cupcakes')
+    def update_cupcake(f, id):
         print ("update cupcake")
 
         if not request.json:
@@ -291,7 +292,8 @@ def create_app(test_config=None):
 
 
     @app.route('/cupcakes/<int:id>', methods=['DELETE'])
-    def delete_cupcake(id):
+    @requires_auth('delete:cupcakes')    
+    def delete_cupcake(f, id):
         print("delete cupcake")
         
         try:

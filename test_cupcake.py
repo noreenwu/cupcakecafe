@@ -65,10 +65,14 @@ class CupcakeTests(unittest.TestCase):
 
     # test creation of new cupcake
     def test_create_cupcake(self):
+        jwt = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZTI2Mjc3MTA4YTcyMDBlYWM1ZmY4NGIiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTY0OTkxMywiZXhwIjoxNTc5NjU3MTEzLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmN1cGNha2VzIiwiZGVsZXRlOmluZ3JlZGllbnRzIiwiZ2V0OmN1cGNha2VzIiwiZ2V0OmluZ3JlZGllbnRzIiwicGF0Y2g6Y3VwY2FrZXMiLCJwYXRjaDppbmdyZWRpZW50cyIsInBvc3Q6Y3VwY2FrZXMiLCJwb3N0OmluZ3JlZGllbnRzIl19.F7eObUq7ehmJAMa2M_sQC5w-FjgVjHhZTxOr-Bomawe4IkB4oVTxCVC7QHnfD5YTk-182HyVVL2A8MxR-5xcYBB_Y41T4YSOjgcyIXmfKldBqy6cQDEeFggH-253P2PL8e-OJVUMz0X8lo8qwHkVjvInjK_VdnOyEe-Tfp06q8I-jDBSd2hP_SS7KOivRq2CfqPC9hmXa65qhoMt86QWpUwmfeKZHMf47xlrJ6XBKWWmH_Bd4gfclTebB7s_i2q_fZ2v1qwUWSDpNwEEcWGtLb6CAdKHGFOiDvARvAangm7ZAN3WVkhNg8bPoXrMcUooNf7YKJePbMK0HMwrNv2SCQ'
+        headers = {
+            'Authorization': 'Bearer {}'.format(jwt)
+        }
         res = (
             self.client()
-                .post('/cupcakes',
-                      json={'name': 'New Cupcake',
+                .post('/cupcakes', headers=headers,
+                      json={'name': 'New Cupcake 1',
                             'description': 'description of New Cupcake',
                             'ingredients': [{'kind': 'topping', 'name': 'new topping'}]
                       })
