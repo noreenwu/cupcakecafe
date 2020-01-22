@@ -389,7 +389,7 @@ def create_app(test_config=None):
 
     # orders
     @app.route('/orders', methods=['GET'])
-    @requires_auth('get:orders')       
+    @requires_auth('get:orders')
     def get_orders(f):
         try:
             orders = Order.query.all()
@@ -405,7 +405,8 @@ def create_app(test_config=None):
 
     # get a specific order
     @app.route('/orders/<int:id>', methods=['GET'])
-    def get_orders_detail(id):
+    @requires_auth('get:orders')    
+    def get_orders_detail(f, id):
 
         try:
             the_order = Order.query.filter_by(id=id).one_or_none()
@@ -419,7 +420,8 @@ def create_app(test_config=None):
 
 
     @app.route('/orders/<int:id>', methods=['DELETE'])
-    def delete_order(id):
+    @requires_auth('delete:orders')    
+    def delete_order(f, id):
         print("delete order")
         
         try:
@@ -435,7 +437,8 @@ def create_app(test_config=None):
 
 
     @app.route('/orders', methods=['POST'])
-    def create_order():
+    @requires_auth('post:orders') 
+    def create_order(f):
 
         print("create order")
         if not request.json:
@@ -471,7 +474,8 @@ def create_app(test_config=None):
 
 
     @app.route('/orders/<int:id>', methods=['PATCH'])
-    def update_specific_order(id):
+    @requires_auth('patch:orders')     
+    def update_specific_order(f, id):
         if not request.json:
             abort(400)
             
