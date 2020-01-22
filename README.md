@@ -82,12 +82,12 @@ POST /orders
 
 PATCH /orders/int:id
 
-    Requires the permission "post:orders", which only users with the BakeryManager role possess.
+    Requires the permission "patch:orders", which only users with the BakeryManager role possess.
 
 
 DELETE/orders/int:id
 
-    Requires the permission "post:orders", which only users with the BakeryManager role possess.
+    Requires the permission "delete:orders", which only users with the BakeryManager role possess.
 
 
 
