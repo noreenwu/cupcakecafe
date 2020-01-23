@@ -350,6 +350,22 @@ def create_app(test_config=None):
                         'ingredients': new_ingredient.format()}), 200
 
 
+    @app.route('/ingredients/<int:id>', methods=['DELETE'])
+    @requires_auth('delete:ingredients')    
+    def delete_ingredient(f, id):
+
+        try:
+            the_ingredient = Ingredient.query.filter_by(id=id).one_or_none()
+            if the_ingredient is None:
+                abort(404)
+            the_ingredient.delete()
+        except DatabaseError:
+            print("Error occurred when trying to delete ingredient")
+            abort(422)
+
+        return jsonify({"success": True, "delete": id}), 200
+
+
     @app.route('/ingredients/<int:id>', methods=['PATCH'])
     @requires_auth('patch:ingredients')    
     def update_ingredient_name(f, id):
