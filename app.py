@@ -320,8 +320,7 @@ def create_app(test_config=None):
         for i in ingredients:
             ilist.append(i.format())
 
-        return jsonify(ilist)
-
+        return jsonify({"success": True, "ingredients": ilist}), 200
 
     @app.route('/ingredients/<int:id>')
     @requires_auth('get:ingredients')    
