@@ -3,6 +3,7 @@ import base64
 from flask import request, _request_ctx_stack, abort
 from functools import wraps
 from jose import jwt
+# from exceptions import JWTError
 from urllib.request import urlopen
 
 
@@ -92,7 +93,12 @@ def check_permissions(permission, payload):
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
-    unverified_header = jwt.get_unverified_header(token)
+    try:
+        unverified_header = jwt.get_unverified_header(token)
+    except:
+        print("Invalid jwt")
+        abort(401)
+
     rsa_key = {}
     if 'kid' not in unverified_header:
         print("invalid header")
@@ -117,7 +123,6 @@ def verify_decode_jwt(token):
                 audience=API_AUDIENCE,
                 issuer='https://' + AUTH0_DOMAIN + '/'
             )
-            # print ("rsa_key is ", rsa_key)
             return payload
 
         except jwt.ExpiredSignatureError:
