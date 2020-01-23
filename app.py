@@ -223,7 +223,8 @@ def create_app(test_config=None):
         except DatabaseError:
             abort(422)
 
-        return jsonify({'success': True, "cupcakes": new_cupcake.long()}), 200
+        clist = [new_cupcake.long()]
+        return jsonify({"success": True, "cupcakes": clist}), 200
 
 
 # ---------------------------------------------------------------------------
