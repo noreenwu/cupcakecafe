@@ -321,6 +321,23 @@ def create_app(test_config=None):
 
         return jsonify(ilist)
 
+
+    @app.route('/ingredients/<int:id>')
+    @requires_auth('get:ingredients')    
+    def get_specific_ingredient(f, id):
+
+        try:
+            the_ingredient = Ingredient.query.filter_by(id=id).one_or_none()
+        except DatabaseError:
+            abort(422)
+
+        if the_ingredient is None:
+            abort(404)
+        ingredient_list = [the_ingredient.format()]
+
+        return jsonify({"success": True, "ingredients": ingredient_list}), 200
+
+
     @app.route('/ingredients', methods=['POST'])
     @requires_auth('post:ingredients')     
     def create_ingredient(f):
