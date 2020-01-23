@@ -361,10 +361,12 @@ def create_app(test_config=None):
         try:
             new_ingredient.insert()
         except DatabaseError:
+            print("could not insert new ingredient")
             abort(422)
 
+        ilist = [new_ingredient.format()]
         return jsonify({'success': True,
-                        'ingredients': new_ingredient.format()}), 200
+                        'ingredients': ilist}), 200
 
 
     @app.route('/ingredients/<int:id>', methods=['DELETE'])
@@ -416,8 +418,8 @@ def create_app(test_config=None):
             print("unable to update the ingredient")
             abort(422)
 
-        print("updated the ingredient")
-        return jsonify({'success': True, "ingredients": the_ingredient.format()}), 200
+        ilist = [the_ingredient.format()]
+        return jsonify({'success': True, "ingredients": ilist}), 200
 
 
     # orders
