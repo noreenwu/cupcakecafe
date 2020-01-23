@@ -51,7 +51,7 @@ class Cupcake(db.Model):
   id = Column(Integer, primary_key=True)
   name = Column(String, nullable=False, unique=True)
   description = Column(String)
-  ingredients = db.relationship('Ingredient', secondary=cupcake_ingredient,
+  ingredients = db.relationship('Ingredient', cascade="all,delete", secondary=cupcake_ingredient,
                                               backref=db.backref('cupcakes'), lazy=True)
   order_items = db.relationship('OrderItem', cascade="all,delete", backref=db.backref('cupcake'), lazy=True)                                              
 
