@@ -29,8 +29,18 @@ The general public can view the cupcakes but does not have access to any of the 
 Users have been set up for your use (passwords provided in submission details):
 
 The tenant domain is wudev@auth0.com. To logout completely (allowing a chance to change users),
-go to wudev.auth0.com/logout. To obtain a new jwt, visit https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=http://127.0.0.1:5000/cupcakes or https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=https://cupcakecafe.herokuapp.com/cupcakes/cupcakes
-login as one of the following users and copy the jwt provided in the url field. Privleges for each role are described below under Endpoint Overview > Roles. 
+go to wudev.auth0.com/logout. To obtain a new jwt, visit:
+
+
+ https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=http://127.0.0.1:5000/cupcakes 
+ 
+ or
+
+ https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=https://cupcakecafe.herokuapp.com/cupcakes/cupcakes
+
+
+Login as one of the following users and copy (extract) the jwt provided in the url field. Privleges for each role are described below under Endpoint Overview > Roles. 
+
 
    uda_chiefbaker@wufried.com is a Chief Baker
 
@@ -85,8 +95,6 @@ Models:
         also contains quantity ordered
     
     
-
-### Back-end
 
 ### Endpoint Overview
 
