@@ -21,7 +21,7 @@ the available ingredients, and therefore can view, create, update, and delete th
 Chief Baker has less interest in the actual orders, except through direct discussion with the Bakery
 Manager, and thus does not have access to see these. 
 
-The general public can view the cupcakes but does not have access to any of the other information.
+The general public can view the cupcakes information (useful for a menu, for example), but it does not have access to any of the other information.
 
 
 ## Running the Application
@@ -32,32 +32,32 @@ The tenant domain is wudev@auth0.com. To logout completely (allowing a chance to
 go to wudev.auth0.com/logout. To obtain a new jwt, visit:
 
 
- https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=http://127.0.0.1:5000/cupcakes 
+    https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=http://127.0.0.1:5000/cupcakes 
  
  or
 
- https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=https://cupcakecafe.herokuapp.com/cupcakes/cupcakes
+    https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=https://cupcakecafe.herokuapp.com/cupcakes/cupcakes
 
 
 Login as one of the following users and copy (extract) the jwt provided in the url field. Privleges for each role are described below under Endpoint Overview > Roles. 
 
 
-   uda_chiefbaker@wufried.com is a Chief Baker
+    uda_chiefbaker@wufried.com is a Chief Baker
 
-   uda_bakerymanager@wufried.com is a Bakery Manager
+    uda_bakerymanager@wufried.com is a Bakery Manager
 
-   uda_bakeryclerk@wufried.com is a Bakery Clerk
+    uda_bakeryclerk@wufried.com is a Bakery Clerk
 
 
 
-Heroku
+# Heroku
 
    The application is accessible at https://cupcakecafe.herokuapp.com/cupcakes (no auth required for this endpoint).
 
    To easily walk through the various endpoints, you may use the Heroku Postman collection
 
 
-Local
+# Local
 
    To set up locally, it is assumed that Python 3.7 and pip 19 are already available in your environment.
 
@@ -109,7 +109,7 @@ Models:
 
 Roles:  
 
-    the public (unauthenticated user) - can view cupcakes or individual cupcakes specified by id
+    the public (an unauthenticated user) - can view cupcakes or individual cupcakes specified by id
 
     Bakery Clerk - can view cupcakes (or individual cupcakes) and view orders (or individual orders by id)
 
