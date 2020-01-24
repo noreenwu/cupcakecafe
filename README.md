@@ -26,11 +26,46 @@ The general public can view the cupcakes but does not have access to any of the 
 
 ## Running the Application
 
+Users have been set up for your use (passwords provided in submission details):
+
+The tenant domain is wudev@auth0.com. To logout completely (allowing a chance to change users),
+go to wudev.auth0.com/logout. To obtain a new jwt, login as one of the following users and
+copy the jwt provided in the url field. Privleges for each role are described under
+Endpoint Overview > Roles below. 
+
+   uda_chiefbaker@wufried.com is a Chief Baker
+
+   uda_bakerymanager@wufried.com is a Bakery Manager
+
+   uda_bakeryclerk@wufried.com is a Bakery Clerk
+
 
 Heroku
 
-local
+   The application is accessible at https://cupcakecafe.herokuapp.com/cupcakes (no auth required for this endpoint).
 
+   To easily walk through the various endpoints, you may use the Heroku Postman collection
+
+
+Local
+
+   To set up locally, it is assumed that Python 3.7 and pip 19 are already available in your environment.
+
+   Download the repository from https://github.com/noreenwu/cupcakecafe.
+
+   Install the requirements: pip install -r requirements.txt
+
+   Set up environment variables: source ./setup.sh (to run tests, use source ./setuptest.sh)
+
+   Create the database:  createdb cupcakecafe  (createdb cupcakecafe_test for tests)
+
+   Load initial data: python load_data.py
+
+   Start the server: python app.py
+
+   It is convenient to use Postman to run through the endpoints: import the CupcakeCafe.postman_collection.
+
+   
 
 ### Database
 
@@ -87,20 +122,107 @@ Tests:
 
 GET /cupcakes
 
-    Does not require credentials
+    Does not require credentials. Returns all cupcakes and the associated ingredients
+
+    Sample: curl http://localhost:5000/cupcakes
+
+    {
+    "cupcakes": [
+        {
+        "description": "classic rich chocolate frosting on fluffy yellow cake",
+        "id": 1,
+        "ingredients": [
+            {
+            "kind": "frosting",
+            "name": "vanilla buttercream"
+            },
+            {
+            "kind": "topping",
+            "name": "rainbow sprinkles"
+            },
+            {
+            "kind": "cake",
+            "name": "yellow"
+            }
+        ],
+        "name": "Classic"
+        },
+        {
+        "description": "chocolate frosting on chocolate cake with chocolate chip topping",
+        "id": 2,
+        "ingredients": [],
+        "name": "Chocolate Top to Bottom"
+        }
+    ],
+    "success": true
+    }
+
 
 GET /cupcakes/int:id
 
-    Does not require credentials
+    Does not require credentials. Returns the specified cupcake with associated ingredients,
+    in same format as GET /cupcakes
+
+    Sample: curl http://localhost:5000/cupcakes/1
+
+
+    {
+    "cupcakes": [
+        {
+        "description": "classic rich chocolate frosting on fluffy yellow cake",
+        "id": 1,
+        "ingredients": [
+            {
+            "kind": "frosting",
+            "name": "vanilla buttercream"
+            },
+            {
+            "kind": "topping",
+            "name": "rainbow sprinkles"
+            },
+            {
+            "kind": "cake",
+            "name": "yellow"
+            }
+        ],
+        "name": "Classic"
+        }
+    ],
+    "success": true
+    }
 
 
 POST /cupcakes
 
     Requires the permission "post:cupcakes", which only the users with the ChiefBaker role possess.
 
+    To test using Postman, enter the following: 
+        
+        METHOD pulldown: select POST
+
+        URL: http://localhost:5000/cupcakes
+
+        Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+        Headers: set Content-Type to application/json
+
+        Body: select radio button "raw" and enter in new cupcake information in JSON format. Example:
+
+                {
+                    "name": "Halloween",
+                    "description": "marshmallow surprise in an orange and black cupcake",
+                    "ingredients": [{"kind": "topping", "name": "gummy witch hat"}]
+
+                }
+
+        Click send.
+
+
 PATCH /cupcakes/int:id
 
     Requires the permission "patch:cupcakes", which only the users with the ChiefBaker role possess.
+
+
 
 
 DELETE /cupcakes/int:id
