@@ -5,12 +5,56 @@
 
 ## Introduction
 
+
+
 ## Running the Application
 
 ### Database
 
+Models:
+
+    Cupcakes with name and description
+        is linked to Ingredient model via secondary cupcake_ingredient table (many cupcakes to many ingredients)
+        is linked to OrderItem; (one cupcake may be in one or more OrderItem)
+
+    Ingredient with kind, name and usage_count
+        linked to Cupcake as described above
+
+    Order with customer_name
+        is linked to OrderItem (one order may contain one or more OrderItem)
+
+    OrderItem with foreign keys cupcake_id (Cupcake) and order_id (Order)
+        also contains quantity ordered
+    
+    
 
 ### Back-end
+
+### Endpoint Overview
+
+GET /cupcakes, /ingredients, /orders
+DELETE /cupcakes, /ingredients, /orders
+POST /cupcakes, /ingredients, /orders
+PATCH /cupcakes, /ingredients, /orders
+
+
+Roles:  
+
+    the public (unauthenticated user) - can view cupcakes or individual cupcakes specified by id
+
+    Bakery Clerk - can view cupcakes (or individual cupcakes) and view orders (or individual orders by id)
+
+    Bakery Manager - can view cupcakes, ingredients, orders; can create, edit and delete orders
+
+    Chief Baker - can view, create, update, delete cupcakes and ingredients; cannot see orders
+
+
+Tests:
+
+    Postman tests are organized by role and emphasize RBAC testing.
+
+    Unittest tests are also organized by role but emphasize correct input.
+
 
 ### Endpoint Library
 
