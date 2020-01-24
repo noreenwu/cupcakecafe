@@ -68,9 +68,9 @@ def get_order_items_db(order_items, order_id):
         try:
             cc_id = o['cupcake_id']
             quant = o['quantity']
-            print("cupcake id was ", cc_id)
-            print("quantity specified was ", quant)
-            print("and the order id was ", order_id)
+            # print("cupcake id was ", cc_id)
+            # print("quantity specified was ", quant)
+            # print("and the order id was ", order_id)
         except KeyError:
             print("could not get cupcake_id or quantity from input")
             abort(400)
@@ -504,8 +504,9 @@ def create_app(test_config=None):
             print("no order items for this order")
             abort(400)
 
+        order_list = [new_order.format()]
         return jsonify({'success': True,
-                        'orders': new_order.format()}), 200
+                        'orders': order_list}), 200
 
 
     @app.route('/orders/<int:id>', methods=['PATCH'])
@@ -540,7 +541,7 @@ def create_app(test_config=None):
             # delete the old order_items associated with this order
             del_old_order_items(the_order.order_items)
             the_order.order_items = []
-            db_order_items = get_order_items_db(order_items, the_order.id)  # associate new order items
+            get_order_items_db(order_items, the_order.id)  # associate new order items
 
         try:
             the_order.update()
@@ -548,8 +549,8 @@ def create_app(test_config=None):
             print("unable to update the order")
             abort(422)
 
-        print("updated the order")
-        return jsonify({'success': True, "orders": the_order.format()}), 200
+        order_list = [the_order.format()]
+        return jsonify({'success': True, "orders": order_list}), 200
 
     @app.errorhandler(422)
     def cannot_process(error):
