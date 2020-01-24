@@ -5,7 +5,7 @@
 
 ## Introduction
 
-The CupcakeCafe API provides functionality to enable a small bakery to manage its cupcake and ingredients
+The CupcakeCafe API provides functionality to enable a small bakery to manage its cupcakes and ingredients
 inventory, while also keeping track of orders. Cupcakes are comprised of ingredient types: typically, frosting, topping,
 and cake. Orders are a collection consisting of the number of cupcakes a customer wishes to order, along
 with their name: for example, one order might be for 15 Halloween Cupcakes + 30 Autumn Fest Cupcakes for a 
@@ -19,7 +19,7 @@ and view the orders. The Chief Baker is most concerned with the current cupcake 
 can create, update, delete and view the cupcakes. Also the Chief Baker is concerned with managing
 the available ingredients, and therefore can view, create, update, and delete the ingredients. The
 Chief Baker has less interest in the actual orders, except through direct discussion with the Bakery
-Manager, and thus does not have access to see these. 
+Manager, and thus does not have access to view or change orders information.
 
 The general public can view the cupcakes information (useful for a menu, for example), but it does not have access to any of the other information.
 
@@ -73,13 +73,13 @@ Login as one of the following users and copy (extract) the jwt provided in the u
 
    Start the server: ```python app.py```
 
-   It is convenient to use Postman to run through the endpoints: import the CupcakeCafe.postman_collection.
+   It is convenient to use Postman to run through the endpoints: import the ```CupcakeCafe.postman_collection.json```.
 
    
 
 ### Database
 
-Models:
+Models (models.py):
 
     Cupcakes with name and description
         is linked to Ingredient model via secondary cupcake_ingredient table (many cupcakes to many ingredients)
