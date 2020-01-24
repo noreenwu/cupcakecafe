@@ -576,6 +576,23 @@ def create_app(test_config=None):
             "message": "Bad request"
         }), 400        
 
+    @app.errorhandler(401)
+    def cannot_process(error):
+        return jsonify({
+            "success": False,
+            "error": 401,
+            "message": "Authorization failed"
+        }), 401
+
+    @app.errorhandler(403)
+    def resource_not_found(error):
+        return jsonify({
+                        "success": False,
+                        "error": 403,
+                        "message": "Unauthorized"
+                        }), 403        
+
+
     return app
 
 app = create_app()
