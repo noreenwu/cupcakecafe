@@ -32,10 +32,13 @@ Models:
 
 ### Endpoint Overview
 
-GET /cupcakes, /ingredients, /orders
-DELETE /cupcakes, /ingredients, /orders
-POST /cupcakes, /ingredients, /orders
-PATCH /cupcakes, /ingredients, /orders
+    GET /cupcakes, /ingredients, /orders
+
+    DELETE /cupcakes, /ingredients, /orders
+
+    POST /cupcakes, /ingredients, /orders
+    
+    PATCH /cupcakes, /ingredients, /orders
 
 
 Roles:  
