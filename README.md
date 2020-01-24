@@ -29,15 +29,15 @@ The general public can view the cupcakes but does not have access to any of the 
 Users have been set up for your use (passwords provided in submission details):
 
 The tenant domain is wudev@auth0.com. To logout completely (allowing a chance to change users),
-go to wudev.auth0.com/logout. To obtain a new jwt, login as one of the following users and
-copy the jwt provided in the url field. Privleges for each role are described under
-Endpoint Overview > Roles below. 
+go to wudev.auth0.com/logout. To obtain a new jwt, visit https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=http://127.0.0.1:5000/cupcakes or https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=https://cupcakecafe.herokuapp.com/cupcakes/cupcakes
+login as one of the following users and copy the jwt provided in the url field. Privleges for each role are described below under Endpoint Overview > Roles. 
 
    uda_chiefbaker@wufried.com is a Chief Baker
 
    uda_bakerymanager@wufried.com is a Bakery Manager
 
    uda_bakeryclerk@wufried.com is a Bakery Clerk
+
 
 
 Heroku
@@ -208,26 +208,98 @@ POST /cupcakes
 
         Body: select radio button "raw" and enter in new cupcake information in JSON format. Example:
 
+            {
+                "name": "Halloween",
+                "description": "marshmallow surprise in an orange and black cupcake",
+                "ingredients": [{"kind": "topping", "name": "gummy witch hat"}]
+
+            }
+
+        Click send to send request.
+
+        Example of successful return value:
+
+            {
+            "cupcakes": [
                 {
-                    "name": "Halloween",
-                    "description": "marshmallow surprise in an orange and black cupcake",
-                    "ingredients": [{"kind": "topping", "name": "gummy witch hat"}]
-
+                "description": "marshmallow surprise in an orange and black cupcake",
+                "id": 4,
+                "ingredients": [
+                    {
+                    "kind": "topping",
+                    "name": "gummy witch hat"
+                    }
+                ],
+                "name": "Halloween"
                 }
-
-        Click send.
+            ],
+            "success": true
+            }        
 
 
 PATCH /cupcakes/int:id
 
     Requires the permission "patch:cupcakes", which only the users with the ChiefBaker role possess.
 
+    In Postman, enter:
 
+    METHOD pulldown: select PATCH
+
+    URL: 127.0.0.1:5000/cupcakes/3
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Headers: set Content-Type to application/json
+
+    Body: select radio button "raw" and enter in new cupcake information in JSON format. Example:
+
+        {
+            "name": "Salt Water Taffy",
+            "description": "miniature taffy candies",
+            "ingredients": [{"kind": "topping", "name": "tiny taffy candies"}]
+            
+        }
+
+    Click send to send request.
+
+    Example of successful return value:
+
+        {
+        "cupcakes": [
+            {
+            "description": "miniature taffy candies",
+            "id": 3,
+            "ingredients": [
+                {
+                "kind": "topping",
+                "name": "tiny taffy candies"
+                }
+            ],
+            "name": "Salt Water Taffy"
+            }
+        ],
+        "success": true
+        }
 
 
 DELETE /cupcakes/int:id
 
     Requires the permission "delete:cupcakes", which only the users with the ChiefBaker role possess.
+
+    In Postman, enter:    
+
+    METHOD pulldown: select DELETE
+
+    URL: 127.0.0.1:5000/cupcakes/3
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Example of successful return value:
+
+        {
+        "delete": 3,
+        "success": true
+        }    
 
 
 GET /ingredients
@@ -236,25 +308,157 @@ GET /ingredients
     BakeryManager roles possess.
 
 
+    In Postman, enter:
+
+    METHOD pulldown: select GET
+
+    URL: 127.0.0.1:5000/ingredients
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Example of successful return value:
+
+        {
+        "ingredients": [
+            {
+            "id": 1,
+            "kind": "frosting",
+            "name": "vanilla buttercream",
+            "usage_count": 1
+            },
+            {
+            "id": 2,
+            "kind": "topping",
+            "name": "rainbow sprinkles",
+            "usage_count": 1
+            },
+            {
+            "id": 3,
+            "kind": "cake",
+            "name": "yellow",
+            "usage_count": 1
+            },
+            {
+            "id": 4,
+            "kind": "topping",
+            "name": "gummy witch hat",
+            "usage_count": 0
+            }
+        ],
+        "success": true
+        }
+
+
 GET /ingredients/int:id
 
     Requires the permission "get:ingredients", which users with either the ChiefBaker or 
     BakeryManager roles possess.
+
+    METHOD pulldown: select GET
+
+    URL: 127.0.0.1:5000/ingredients/1
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Example of successful return value:
+
+        {
+        "ingredients": [
+            {
+            "id": 1,
+            "kind": "frosting",
+            "name": "vanilla buttercream",
+            "usage_count": 1
+            }
+        ],
+        "success": true
+        }
 
 
 POST /ingredients
 
     Requires the permission "post:ingredients", which only users with the ChiefBaker role possess.
 
+    METHOD pulldown: select POST
+
+    URL: 127.0.0.1:5000/ingredients
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Headers: set Content-Type to application/json
+
+    Body: select radio button "raw" and enter in new cupcake information in JSON format. Example:
+
+        {
+            "name": "cream cheese frosting",
+            "kind": "frosting"
+        }        
+
+    Example of successful return value:
+
+        {
+        "ingredients": [
+            {
+            "id": 6,
+            "kind": "frosting",
+            "name": "cream cheese frosting",
+            "usage_count": 0
+            }
+        ],
+        "success": true
+        }
+
 
 PATCH /ingredients/int:id
 
     Requires the permission "patch:ingredients", which only users with the ChiefBaker role possess.
 
+    METHOD pulldown: select PATCH
+
+    URL: 127.0.0.1:5000/ingredients/1
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Headers: set Content-Type to application/json    
+
+    Body: select radio button "raw" and enter in new cupcake information in JSON format. Example:
+
+        {
+            "kind": "frosting",
+            "name": "chocolate buttercream"
+        }
+
+    Example of a successful return value:
+
+        {
+        "ingredients": [
+            {
+            "id": 1,
+            "kind": "frosting",
+            "name": "chocolate buttercream",
+            "usage_count": 1
+            }
+        ],
+        "success": true
+        }
+
 
 DELETE /ingredients/int:id
 
     Requires the permission "delete:ingredients", which only users with the ChiefBaker role possess.
+
+    METHOD pulldown: select DELETE
+
+    URL: 127.0.0.1:5000/ingredients/6
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Example of a successful return value:
+
+        {
+        "delete": 6,
+        "success": true
+        }    
 
 
 GET /orders
@@ -262,24 +466,168 @@ GET /orders
     Requires the permission "get:orders", which users with either the BakeryManager or BakeryClerk
     roles possess.
 
+    METHOD pulldown: select GET
+
+    URL: 127.0.0.1:5000/orders
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Example of a successful return value:
+
+        {
+        "orders": [
+            {
+            "customer_name": "Sneezy",
+            "id": 2,
+            "order_items": [
+                {
+                "cupcake_id": 2,
+                "cupcake_name": "Chocolate Top to Bottom",
+                "quantity": 25
+                }
+            ]
+            },
+            {
+            "customer_name": "Mr. Smyth",
+            "id": 3,
+            "order_items": [
+                {
+                "cupcake_id": 1,
+                "cupcake_name": "Classic",
+                "quantity": 15
+                }
+            ]
+            }
+        ],
+        "success": true
+        }    
+
 GET /orders/int:id
 
     Requires the permission "get:orders", which users with either the BakeryManager or BakeryClerk
     roles possess.
+
+    METHOD pulldown: select GET
+
+    URL: 127.0.0.1:5000/orders/1    
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Example of a successful return value:
+
+        {
+        "orders": [
+            {
+            "customer_name": "Buck",
+            "id": 2,
+            "order_items": [
+                {
+                "cupcake_id": 1,
+                "cupcake_name": "Classic",
+                "quantity": 99
+                }
+            ]
+            }
+        ],
+        "success": true
+        }
 
 
 POST /orders
 
     Requires the permission "post:orders", which only users with the BakeryManager role possess.
 
+    METHOD pulldown: select POST
+
+    URL: 127.0.0.1:5000/orders
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Headers: set Content-Type to application/json    
+
+    Body: select radio button "raw" and enter in new cupcake information in JSON format. Example:
+
+        {
+            "customer_name": "Mr. Smyth",
+            "order_items": [{"cupcake_id": 1, "quantity": 15}]
+        }   
+
+
+    Example of a successful return value:
+
+        {
+        "orders": [
+            {
+            "customer_name": "Mr. Smyth",
+            "id": 4,
+            "order_items": [
+                {
+                "cupcake_id": 1,
+                "cupcake_name": "Classic",
+                "quantity": 15
+                }
+            ]
+            }
+        ],
+        "success": true
+        }    
+
+
 PATCH /orders/int:id
 
     Requires the permission "patch:orders", which only users with the BakeryManager role possess.
+
+    METHOD pulldown: select PATCH
+
+    URL: 127.0.0.1:5000/orders/2
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Headers: set Content-Type to application/json    
+
+    Body: select radio button "raw" and enter in new cupcake information in JSON format. Example:
+
+        {
+            "customer_name": "Buck",
+            "order_items": [{"cupcake_id": 1, "quantity": 110}]
+        }    
+
+    Example of successful return value:
+
+        {
+        "orders": [
+            {
+            "customer_name": "Buck",
+            "id": 2,
+            "order_items": [
+                {
+                "cupcake_id": 1,
+                "cupcake_name": "Classic",
+                "quantity": 110
+                }
+            ]
+            }
+        ],
+        "success": true
+        }    
 
 
 DELETE/orders/int:id
 
     Requires the permission "delete:orders", which only users with the BakeryManager role possess.
+
+    METHOD pulldown: select DELETE
+
+    URL: 127.0.0.1:5000/orders/2
+
+    Authorization: choose Bearer Token and fill in jwt with credentials to be tested in the Token field
+
+    Example of successful return value:
+
+        {
+        "delete": 2,
+        "success": true
+        }        
 
 
 
@@ -287,7 +635,7 @@ DELETE/orders/int:id
 
 In order to run the unit tests, first ensure that the DATABASE_URL environment variable is set to
 the name of the test database (example: cupcakecafe_test). This is pre-configured
-in the shell script setuptest.sh. To run it in bash, use ```source ./setupsh.sh```
+in the shell script setuptest.sh. To run it in bash, use ```source ./setuptest.sh```
 
 Create the test database and load it with some data.
 
