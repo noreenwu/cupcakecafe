@@ -29,7 +29,7 @@ The general public can view the cupcakes information (useful for a menu, for exa
 Users have been set up for your use (passwords provided in submission details):
 
 The tenant domain is wudev@auth0.com. To logout completely (allowing a chance to change users),
-go to wudev.auth0.com/logout. To obtain a new jwt, visit:
+go to wudev.auth0.com/logout. To obtain new credentials, get a new jwt, by visiting:
 
 
     https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=http://127.0.0.1:5000/cupcakes 
@@ -39,7 +39,7 @@ go to wudev.auth0.com/logout. To obtain a new jwt, visit:
     https://wudev.auth0.com/authorize?audience=cupcakecafe&response_type=token&client_id=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5&redirect_uri=https://cupcakecafe.herokuapp.com/cupcakes/cupcakes
 
 
-Login as one of the following users and copy (extract) the jwt provided in the url field. Privleges for each role are described below under Endpoint Overview > Roles. 
+Login as one of the following users and copy (extract) the jwt provided in the url field. Privleges for each role are described below, under Endpoint Overview > Roles. 
 
 
     uda_chiefbaker@wufried.com is a Chief Baker
@@ -52,26 +52,26 @@ Login as one of the following users and copy (extract) the jwt provided in the u
 
 # Heroku
 
-   The application is accessible at https://cupcakecafe.herokuapp.com/cupcakes (no auth required for this endpoint).
+   The application is accessible at https://cupcakecafe.herokuapp.com/cupcakes (no auth required for getting cupcakes endpoint).
 
    To easily walk through the various endpoints, you may use the Heroku Postman collection
 
 
 # Local
 
-   To set up locally, it is assumed that Python 3.7 and pip 19 are already available in your environment.
+   To set up locally, it is assumed that Python 3.7, pip 19 and Postgres are already available in your environment.
 
    Download the repository from https://github.com/noreenwu/cupcakecafe.
 
-   Install the requirements: pip install -r requirements.txt
+   Install the requirements: ```pip install -r requirements.txt```
 
-   Set up environment variables: source ./setup.sh (to run tests, use source ./setuptest.sh)
+   Set up environment variables: ```source ./setup.sh``` (to run tests, use ```source ./setuptest.sh```)
 
-   Create the database:  createdb cupcakecafe  (createdb cupcakecafe_test for tests)
+   Create the database:  ```createdb cupcakecafe```  (```createdb cupcakecafe_test``` for tests)
 
-   Load initial data: python load_data.py
+   Load initial data: ```python load_data.py```
 
-   Start the server: python app.py
+   Start the server: ```python app.py```
 
    It is convenient to use Postman to run through the endpoints: import the CupcakeCafe.postman_collection.
 
@@ -122,7 +122,7 @@ Tests:
 
     Postman tests are organized by role and emphasize RBAC testing.
 
-    Unittest tests are also organized by role but emphasize correct input.
+    Unittest tests are set up with jwt's that have access to the endpoints, but test for valid data input and other errors.
 
 
 ### Endpoint Library
