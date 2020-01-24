@@ -5,9 +5,32 @@
 
 ## Introduction
 
+The CupcakeCafe API provides functionality to enable a small bakery to manage its cupcake and ingredients
+inventory, while also keeping track of orders. Cupcakes are comprised of ingredient types: typically, frosting, topping,
+and cake. Orders are a collection consisting of the number of cupcakes a customer wishes to order, along
+with their name: for example, one order might be for 15 Halloween Cupcakes + 30 Autumn Fest Cupcakes for a 
+customer named Marty Smith.
+
+The API assumes that bakery workers will take on several different roles: The Bakery Manager is focused on
+taking customer orders and on which ingredients are in the most demand, and therefore has the capability to add,
+create, update, delete and view all the orders, as well as view the ingredients in use and the current
+cupcake selection. The Bakery Clerk is an assistant to the Manager and can only view the cupcake selection
+and view the orders. The Chief Baker is most concerned with the current cupcake offering, and thus
+can create, update, delete and view the cupcakes. Also the Chief Baker is concerned with managing
+the available ingredients, and therefore can view, create, update, and delete the ingredients. The
+Chief Baker has less interest in the actual orders, except through direct discussion with the Bakery
+Manager, and thus does not have access to see these. 
+
+The general public can view the cupcakes but does not have access to any of the other information.
 
 
 ## Running the Application
+
+
+Heroku
+
+local
+
 
 ### Database
 
@@ -37,7 +60,7 @@ Models:
     DELETE /cupcakes, /ingredients, /orders
 
     POST /cupcakes, /ingredients, /orders
-    
+
     PATCH /cupcakes, /ingredients, /orders
 
 
