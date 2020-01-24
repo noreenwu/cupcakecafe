@@ -1,3 +1,4 @@
 export DATABASE_URL=postgres://localhost:5432/cupcakecafe
 export FLASK_ENV=development
 export SECRET_KEY=xKRmh_AFKHquLsCUM4h_nG6X-9rEYeO8G-s1297YhBj7DWjAZ7BTPtZUXj_SjL4C
+export CLIENT_ID=ee9rXCAGDEcRMdffrVd26blU9PLqdgk5
