@@ -1,0 +1,2693 @@
+{
+	"info": {
+		"_postman_id": "e951a9a7-abdf-401c-93cd-f37124d3abaa",
+		"name": "HerokuCupcakeCafe",
+		"description": "This API allows its user to add, delete and update cupcakes, ingredients and orders, all pertaining to business done at the Cupcake Cafe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "GET cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d46209ab-6d42-4a4b-9759-12949abbe8e0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cupcake detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a684e07-c696-4c49-8243-faeb6ea72cc3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "50600f18-3a03-40dc-b609-c943758d89cc",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Hiccup 26\",\n    \"description\": \"marshmallow surprise in a chocolate chip cake\",\n    \"ingredients\": [{\"kind\": \"topping\", \"name\": \"gummy bear\"}]\n\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes"
+							]
+						},
+						"description": "add a new cupcake"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a40b255-0abb-4b27-af78-bbc4330d0d07",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/27",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b30f655-e70e-4e96-8f16-ffc0ccc4393b",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"SALT\",\n\t\"description\": \"new ingredients\",\n\t\"ingredients\": [{\"kind\": \"topping\", \"name\": \"rainbow sprinkles\"}]\n\t\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/8",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e313521b-dd21-47f6-bb2b-3f8a01d746d1",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET specific ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a5ed497b-0a40-43c6-827e-fa5e36974e44",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6dd018c0-2722-4670-9539-ce65f5872468",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"cream cheese frosting 3\",\n    \"kind\": \"frosting\"\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7e68de11-8ca3-4f05-8a1b-cd206f8da04e",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients/11",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "85b9c033-9c99-48ab-9412-a83779175af6",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"kind\": \"topping\",\n    \"name\": \"chocolate sprinkles\"\n  }"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients/5",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dceda18c-9978-46ed-b9a2-fb83fdb1cfca",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTcyNDQyMSwiZXhwIjoxNTc5NzMxNjIxLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.AOgbvK-2knTBnXJOi-w15W52CkxGUkopfQ3qvBml_NCHM8sdXNpVrJQcz4UtbW8y2-97dFXgeoBowPZHTlFHerzOE0C3Jbgzbf5Q8pwk0DkFg1uGDWSjsEpF0t3cSRSSHCEdbNagVST8uOO10dJLUtJHyyNSexpcDN4bc2ts62E_dsyi2cjKAKvuK2dE-c83V9tDD2b1vgtwaXa0cu0YdKneu1Xmy-wKDuUG8G9bn8DZPObknqgfuEsF7QcLBzwbAd9YazEUSgCEmhNIYIPVzeG8VPJe70ZfkrYe_uCAXvGj-g_RqOZrWvbYY--JNDCGUh4Zq04T_1DBRKl9hl2OTQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET specific orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "af292308-7897-44ba-911a-8d9358cfe308",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST  orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "75fa1231-ba07-4a18-8162-9e51e6286b43",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_name\": \"Mr. Smyth\",\n    \"order_items\": [{\"cupcake_id\": 13, \"quantity\": 15}]\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f74c36f-af9c-4734-bb58-531c5d4c3b66",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f599746f-b1fb-4e11-ad0c-23c8dc6dd9d8",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_name\": \"Buck\",\n    \"order_items\": [{\"cupcake_id\": 1, \"quantity\": 99}]\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Bakery Clerk",
+			"item": [
+				{
+					"name": "GET cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d46209ab-6d42-4a4b-9759-12949abbe8e0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cupcake detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a684e07-c696-4c49-8243-faeb6ea72cc3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "50600f18-3a03-40dc-b609-c943758d89cc",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Hiccup 26\",\n    \"description\": \"marshmallow surprise in a chocolate chip cake\",\n    \"ingredients\": [{\"kind\": \"topping\", \"name\": \"gummy bear\"}]\n\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes"
+							]
+						},
+						"description": "add a new cupcake"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a40b255-0abb-4b27-af78-bbc4330d0d07",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/27",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b30f655-e70e-4e96-8f16-ffc0ccc4393b",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"SALT\",\n\t\"description\": \"new ingredients\",\n\t\"ingredients\": [{\"kind\": \"topping\", \"name\": \"rainbow sprinkles\"}]\n\t\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/8",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e313521b-dd21-47f6-bb2b-3f8a01d746d1",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET specific ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a5ed497b-0a40-43c6-827e-fa5e36974e44",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/ingredients",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6dd018c0-2722-4670-9539-ce65f5872468",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"cream cheese frosting 3\",\n    \"kind\": \"frosting\"\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7e68de11-8ca3-4f05-8a1b-cd206f8da04e",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/ingredients/11",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingredients",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "85b9c033-9c99-48ab-9412-a83779175af6",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"kind\": \"topping\",\n    \"name\": \"chocolate sprinkles\"\n  }"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients/5",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dceda18c-9978-46ed-b9a2-fb83fdb1cfca",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains orders array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.orders).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET specific orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "af292308-7897-44ba-911a-8d9358cfe308",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains orders array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.orders).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST  orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "75fa1231-ba07-4a18-8162-9e51e6286b43",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGY2ZGM0NjUyNWVlMDBlYTMyMTI1ZjUiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgyODk0NSwiZXhwIjoxNTc5ODM2MTQ1LCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.BR2wJiMfI_RNuNa0lwwZxJa2Zgx5hoQ33emH6_mAUucy04UI0hczN5qkR-sB-eYKtk3OfCs941ydWXnKGrzM8ZbXQptsxH48Tc33EwDim5fPa7jJmMrLSdf9NpQKiIncwCdvZC8vNAaoxuZwU_WU92Cv5xN--N7uHdefOSb6cf_Xo4V4dIR4TcCnqDUDHbKedM9XWxGEPZMIDndzDgrX-Hhr0udtzYR4PSW6So58WIPZ24EG1YhseK91ZyfYjEt2tiw4hojAY38bK0urQl3YeDEIGMzNZ8hxZF1VzdQi-lUa1cA-bNPOJYJhAbDNbAJu_7UbWdr7PY6bJnoFFQgFQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_name\": \"Mr. Smyth\",\n    \"order_items\": [{\"cupcake_id\": 13, \"quantity\": 15}]\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f74c36f-af9c-4734-bb58-531c5d4c3b66",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f599746f-b1fb-4e11-ad0c-23c8dc6dd9d8",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_name\": \"Buck\",\n    \"order_items\": [{\"cupcake_id\": 1, \"quantity\": 99}]\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZTJiNDdjZjRlMjdmZDBmMDM1ZWFlNjIiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTkxODc3MCwiZXhwIjoxNTc5OTI1OTcwLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmN1cGNha2VzIiwiZ2V0Om9yZGVycyJdfQ.EH_dtBShYWW10u0s3AOdLItUckL41ZTXiddI69zbMAHFgh7nSQg3UNL6jnFb3TMnB7GuTQ1oHfT2tzzoh727vqByBZOXUScPx_b6sngI8KNorpIxb8QwoYmyCovQBqROihPgHEExGFho3DwldDjd5w808w8Cl_pLMggUoLUWOmtqhARNNPVjW9IvFg7GCQX2wXwmtiKGX5Rc0ajr_ty_d3dn5QGGJH-1a5xQXG_r044_7Ge_5AeBTa-kaf6hzykskoBs_XFNTYyM4W2yutVcfU6s3R43MZdZS72MpcxM48Dvt8YIL94B2m8KwC8vLVzSHter7yYsuum3MOxdxoxnfQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7cd76c1c-cd7e-489c-af24-15b48220b23b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc8c1c71-568f-44d1-af15-8f7381d07389",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Bakery Manager",
+			"item": [
+				{
+					"name": "GET cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d46209ab-6d42-4a4b-9759-12949abbe8e0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGVjNDE2NGZmOWM5YzBjYzFlZjcwOTAiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgzMDQzMiwiZXhwIjoxNTc5ODM3NjMyLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOm9yZGVycyIsImdldDpjdXBjYWtlcyIsImdldDppbmdyZWRpZW50cyIsImdldDpvcmRlcnMiLCJwYXRjaDpvcmRlcnMiLCJwb3N0Om9yZGVycyJdfQ.LKkz2K99u5DVGfDt9nX6viICJnnY633Vo0xhyKBz71Nfa7vk46Njnp_wpvunTJOH8KtQh3A11Ykd7SGL68y4_hA-SIy6_vDhk6RyCdWkn0w3noe4iiT_VN1AfRNZE6QfYfsUou08KDSu6IynRB0EAJSAPC2YpZxQsdHSqo-WSwn4vj3ukZJmx_fPiXiEPZs9qhP4ocy8UeEuUEV2I_FUfkJvluxAAh_te5RiBhgatlOQtUFdsa9mbv4xZm9lgqQMk00zCGLuAEzZ5BjwMawjsTnAB_1zsYYjuzu8C_GGkaXn3hy3htDyJDe4AN-MgNz5mpd0I3SOv-Z2mPyxPNnEow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cupcake detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a684e07-c696-4c49-8243-faeb6ea72cc3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "50600f18-3a03-40dc-b609-c943758d89cc",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGVjNDE2NGZmOWM5YzBjYzFlZjcwOTAiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgzMDQzMiwiZXhwIjoxNTc5ODM3NjMyLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOm9yZGVycyIsImdldDpjdXBjYWtlcyIsImdldDppbmdyZWRpZW50cyIsImdldDpvcmRlcnMiLCJwYXRjaDpvcmRlcnMiLCJwb3N0Om9yZGVycyJdfQ.LKkz2K99u5DVGfDt9nX6viICJnnY633Vo0xhyKBz71Nfa7vk46Njnp_wpvunTJOH8KtQh3A11Ykd7SGL68y4_hA-SIy6_vDhk6RyCdWkn0w3noe4iiT_VN1AfRNZE6QfYfsUou08KDSu6IynRB0EAJSAPC2YpZxQsdHSqo-WSwn4vj3ukZJmx_fPiXiEPZs9qhP4ocy8UeEuUEV2I_FUfkJvluxAAh_te5RiBhgatlOQtUFdsa9mbv4xZm9lgqQMk00zCGLuAEzZ5BjwMawjsTnAB_1zsYYjuzu8C_GGkaXn3hy3htDyJDe4AN-MgNz5mpd0I3SOv-Z2mPyxPNnEow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Hiccup 26\",\n    \"description\": \"marshmallow surprise in a chocolate chip cake\",\n    \"ingredients\": [{\"kind\": \"topping\", \"name\": \"gummy bear\"}]\n\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes"
+							]
+						},
+						"description": "add a new cupcake"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a40b255-0abb-4b27-af78-bbc4330d0d07",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGVjNDE2NGZmOWM5YzBjYzFlZjcwOTAiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgzMDQzMiwiZXhwIjoxNTc5ODM3NjMyLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOm9yZGVycyIsImdldDpjdXBjYWtlcyIsImdldDppbmdyZWRpZW50cyIsImdldDpvcmRlcnMiLCJwYXRjaDpvcmRlcnMiLCJwb3N0Om9yZGVycyJdfQ.LKkz2K99u5DVGfDt9nX6viICJnnY633Vo0xhyKBz71Nfa7vk46Njnp_wpvunTJOH8KtQh3A11Ykd7SGL68y4_hA-SIy6_vDhk6RyCdWkn0w3noe4iiT_VN1AfRNZE6QfYfsUou08KDSu6IynRB0EAJSAPC2YpZxQsdHSqo-WSwn4vj3ukZJmx_fPiXiEPZs9qhP4ocy8UeEuUEV2I_FUfkJvluxAAh_te5RiBhgatlOQtUFdsa9mbv4xZm9lgqQMk00zCGLuAEzZ5BjwMawjsTnAB_1zsYYjuzu8C_GGkaXn3hy3htDyJDe4AN-MgNz5mpd0I3SOv-Z2mPyxPNnEow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/27",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b30f655-e70e-4e96-8f16-ffc0ccc4393b",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"SALT\",\n\t\"description\": \"new ingredients\",\n\t\"ingredients\": [{\"kind\": \"topping\", \"name\": \"rainbow sprinkles\"}]\n\t\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/8",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e313521b-dd21-47f6-bb2b-3f8a01d746d1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains ingredients array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ingredients).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET specific ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a5ed497b-0a40-43c6-827e-fa5e36974e44",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains ingredients array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ingredients).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6dd018c0-2722-4670-9539-ce65f5872468",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"cream cheese frosting 3\",\n    \"kind\": \"frosting\"\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7e68de11-8ca3-4f05-8a1b-cd206f8da04e",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients/11",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "85b9c033-9c99-48ab-9412-a83779175af6",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"kind\": \"topping\",\n    \"name\": \"chocolate sprinkles\"\n  }"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients/5",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dceda18c-9978-46ed-b9a2-fb83fdb1cfca",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains orders array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.orders).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET specific orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "af292308-7897-44ba-911a-8d9358cfe308",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains orders array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.orders).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST  orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "75fa1231-ba07-4a18-8162-9e51e6286b43",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains orders array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.orders).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_name\": \"Mr. Smyth\",\n    \"order_items\": [{\"cupcake_id\": 20, \"quantity\": 15}]\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f74c36f-af9c-4734-bb58-531c5d4c3b66",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f599746f-b1fb-4e11-ad0c-23c8dc6dd9d8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains orders array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.orders).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZGVjNDE2NGZmOWM5YzBjYzFlZjcwOTAiLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTgzMDQzMiwiZXhwIjoxNTc5ODM3NjMyLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOm9yZGVycyIsImdldDpjdXBjYWtlcyIsImdldDppbmdyZWRpZW50cyIsImdldDpvcmRlcnMiLCJwYXRjaDpvcmRlcnMiLCJwb3N0Om9yZGVycyJdfQ.LKkz2K99u5DVGfDt9nX6viICJnnY633Vo0xhyKBz71Nfa7vk46Njnp_wpvunTJOH8KtQh3A11Ykd7SGL68y4_hA-SIy6_vDhk6RyCdWkn0w3noe4iiT_VN1AfRNZE6QfYfsUou08KDSu6IynRB0EAJSAPC2YpZxQsdHSqo-WSwn4vj3ukZJmx_fPiXiEPZs9qhP4ocy8UeEuUEV2I_FUfkJvluxAAh_te5RiBhgatlOQtUFdsa9mbv4xZm9lgqQMk00zCGLuAEzZ5BjwMawjsTnAB_1zsYYjuzu8C_GGkaXn3hy3htDyJDe4AN-MgNz5mpd0I3SOv-Z2mPyxPNnEow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_name\": \"Buck\",\n    \"order_items\": [{\"cupcake_id\": 1, \"quantity\": 99}]\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/2",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZTJiNDc4MmNjMmRhODBlOTgxM2YzNTciLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTkxOTc5MiwiZXhwIjoxNTc5OTI2OTkyLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOm9yZGVycyIsImdldDppbmdyZWRpZW50cyIsImdldDpvcmRlcnMiLCJwYXRjaDpvcmRlcnMiLCJwb3N0Om9yZGVycyJdfQ.EJSXXC-zNUEqyKZnz0wCvzFnE30mWYsgI_5h1DjvBNYRj2IY_neqR4ScgA54LR4SbgLjpKYOQT0X9LN-ofAE5AK4GJN_AmI3yosX2oeVJLawqVcg4S6cHGW-QSu4xvP_qp8-Z22Wp1haTKmGN06E2e0yzWkrL2odm2JfK22FFldgQGl0ya0WZjHSdzYEu9nV8SNT_Xc4xQNzJGn4jn2jFYnl5DNU8PbMar6jJ298BuZM0TwcBlE9QgtsEdvuhVOdRoQm9ebCF_3qztQicx3X6StvbC34CdMlomspNyWzpo0H7meEq9SYtebnr7LpXEv5scxnfqI8bQ6kO7fJYTDnlQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "11850cc8-8875-41cf-8156-a6a8fdb0736a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "20f5bfd1-091f-46f9-9796-afd37e12f6c8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Chief Baker",
+			"item": [
+				{
+					"name": "GET cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecf71c06-6c2b-4f2f-82a3-8d962f55bb59",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cupcake detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36b24456-b5b0-4ad7-a694-ccfc540be72c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa0d32f1-37c5-45a0-a958-63123ba65f8d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Halloween\",\n    \"description\": \"marshmallow surprise in an orange and black cupcake\",\n    \"ingredients\": [{\"kind\": \"topping\", \"name\": \"gummy witch hat\"}]\n\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes"
+							]
+						},
+						"description": "add a new cupcake"
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dbf22afd-cdfd-424d-9e1a-77dead19afe5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains cupcakes array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.cupcakes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Salt Water Taffy\",\n\t\"description\": \"miniature taffy candies\",\n\t\"ingredients\": [{\"kind\": \"topping\", \"name\": \"tiny taffy candies\"}]\n\t\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/3",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE cupcakes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1d86387e-07e8-40b3-b33f-50749ed09078",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/cupcakes/3",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cupcakes",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19ef2b8c-5580-4dd5-84a1-a6dfebb297a1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains ingredients array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ingredients).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET specific ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "07e7ff1d-f33e-4cac-8617-5a2497bb5241",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains ingredients array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ingredients).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5396ec9c-c8fa-43e4-8cd2-f99410da5e74",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains ingredients array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ingredients).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"cream cheese frosting\",\n    \"kind\": \"frosting\"\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9e3d5223-673e-4627-a5ea-8d8741e041ca",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains ingredients array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ingredients).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"kind\": \"topping\",\n    \"name\": \"chocolate sprinkles\"\n  }"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients/6",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a6775374-8a24-4df6-852c-8201fb10b662",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/ingredients/6",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"ingredients",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "929f7250-a8a6-4062-b393-88d75fc4abe1",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET orders detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a5d9e74a-168e-4665-a012-eb2b12ba2691",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/28",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST  order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e573f650-bb5b-4f26-a6e4-9eefa6a90331",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_name\": \"Mr. Smyth\",\n    \"order_items\": [{\"cupcake_id\": 13, \"quantity\": 15}]\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE specified order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "40022bec-c5fa-49dc-8cc6-aa62ba61f975",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/3",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a598200c-57d6-444a-aada-b87f0b93cfc8",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_name\": \"Buck\",\n    \"order_items\": [{\"cupcake_id\": 1, \"quantity\": 99}]\n}"
+						},
+						"url": {
+							"raw": "cupcakecafe.herokuapp.com/orders/1",
+							"host": [
+								"cupcakecafe",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJFUkZNRGN6TVRsRFFVWkZPRU0yUmprelFVVTFNRVUxUkRoRk1FTXpOVUUzUmpZMk9EQTRNdyJ9.eyJpc3MiOiJodHRwczovL3d1ZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZTJiNDcwNWIzMDNiNjBkYjYwN2I1ZTciLCJhdWQiOiJjdXBjYWtlY2FmZSIsImlhdCI6MTU3OTkyMDA3MywiZXhwIjoxNTc5OTI3MjczLCJhenAiOiJlZTlyWENBR0RFY1JNZGZmclZkMjZibFU5UExxZGdrNSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmN1cGNha2VzIiwiZGVsZXRlOmluZ3JlZGllbnRzIiwiZ2V0OmN1cGNha2VzIiwiZ2V0OmluZ3JlZGllbnRzIiwicGF0Y2g6Y3VwY2FrZXMiLCJwYXRjaDppbmdyZWRpZW50cyIsInBvc3Q6Y3VwY2FrZXMiLCJwb3N0OmluZ3JlZGllbnRzIl19.k9Eub4o5C17HRHXTRuOG-vUmTC2JTiisE0S51r3FrD0NylNz6rEBZnECC_KnhB9ewv-p8OKBx3aBvvhFIzvgFapY78iIt5BJ2POczyWcqqvEXkEtjNPU0w9NocpI_A0UdxHDFRIFdPUDdiXk9tZmzzuuXV6CjNB7KDzjdjBNg89GuIJUF_gGPrNz5txj3DqGY-kS_05627uvuypk_DeEQdlFRN4w1duhg2FC3svpfjs-T5jQNYZffvRQuRvyVT332BwpsqLoO0Bh12q753ffvpJJvf0_zroTQip91tNN6PoswJlrE3qAHlZa4G4Jg_pLqinnMCgom--dA6Ido0ckag",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bc9ce230-fb07-4728-83c8-8f997cbd8a38",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c958ef35-39c8-4dab-ab64-4ece7778c988",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
