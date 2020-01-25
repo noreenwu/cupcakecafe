@@ -345,6 +345,12 @@ def create_app(test_config=None):
         if not name or name is None or not kind or kind is None:
             abort(400)
 
+        the_ingredient = Ingredient.query.filter_by(name=name).one_or_none()
+
+        if the_ingredient is not None:
+            print("ingredient of that name already exists")
+            abort(400)
+
         new_ingredient = Ingredient(name=name, kind=kind)
 
         try:
