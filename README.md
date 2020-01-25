@@ -9,7 +9,8 @@ The CupcakeCafe API provides functionality to enable a small bakery to manage it
 inventory, while also keeping track of orders. Cupcakes are comprised of ingredient types: typically, frosting, topping,
 and cake. Orders are a collection consisting of the number of cupcakes a customer wishes to order, along
 with their name: for example, one order might be for 15 Halloween Cupcakes + 30 Autumn Fest Cupcakes for a 
-customer named Marty Smith.
+customer named Marty Smith. A Halloween Cupcake might be made with angelfood as the cake, chocolate buttercream
+as the frosting and candy corn as a topping.
 
 The API assumes that bakery workers will take on several different roles: The Bakery Manager is focused on
 taking customer orders and on which ingredients are in the most demand, and therefore has the capability to add,
