@@ -21,7 +21,7 @@ the available ingredients, and therefore can view, create, update, and delete th
 Chief Baker has less interest in the actual orders, except through direct discussion with the Bakery
 Manager, and thus does not have access to view or change orders information.
 
-The general public can view the cupcakes information (useful for a menu, for example), but it does not have access to any of the other information.
+The general public can view the cupcakes information (useful for a menu, for example), but unauthenticated users do not have access to any of the other information.
 
 
 ## Running the Application
@@ -54,7 +54,7 @@ Login as one of the following users and copy (extract) the jwt provided in the u
 
    The application is accessible at https://cupcakecafe.herokuapp.com/cupcakes (no auth required for getting cupcakes endpoint).
 
-   To easily walk through the various endpoints, you may use the Heroku Postman collection
+   To easily walk through the various endpoints, you may use the Postman collection ```HerokuCupcakeCafe.postman_collection.json```
 
 
 # Local
