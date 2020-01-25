@@ -130,17 +130,7 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
-  
-    # @app.route('/')
-    # def get_greeting():
-    #     # excited = os.environ['EXCITED']
-    #     greeting = "Hello" 
-    #     # if excited == 'true': greeting = greeting + "!!!!!"
-    #     return greeting
 
-    # @app.route('/coolkids')
-    # def be_cool():
-    #     return "Be cool, man, be coooool! You're almost a FSND grad!"
 
     @app.route('/cupcakes', methods=['GET'])
     def get_cupcakes():
@@ -149,7 +139,6 @@ def create_app(test_config=None):
         except DatabaseError:
             abort(422)
 
-        print("cupcakes")
         clist = []
         for c in cupcakes:
             clist.append(c.long())
@@ -592,6 +581,13 @@ def create_app(test_config=None):
                         "message": "Unauthorized"
                         }), 403        
 
+    @app.errorhandler(405)
+    def resource_not_found(error):
+        return jsonify({
+                        "success": False,
+                        "error": 405,
+                        "message": "Method not allowed"
+                        }), 405   
 
     return app
 
