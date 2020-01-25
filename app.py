@@ -112,7 +112,7 @@ def is_valid_order_items(order_items):
             o['quantity']
         except KeyError:
             print("invalid order_items specification")
-            abort(422)
+            abort(400)
         try:
             cupcake = Cupcake.query.filter_by(id=ccid).one_or_none()
         except DatabaseError:
