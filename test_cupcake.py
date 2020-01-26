@@ -557,10 +557,81 @@ class CupcakeTests(unittest.TestCase):
 
         data = json.loads(res.data)
 
-        self.assertTrue(the_ingredient is not None)
         self.assertEqual(res.status_code, 400)
         self.assertEqual(data['success'], False)
 
+    # ----------------------------------------------------------------------------
+    #  DELETE /ingredients/<int:id>
+    # ----------------------------------------------------------------------------
+    def test_delete_ingredient(self):
+        print("test DELETE specified ingredient")
+
+        headers = {
+            'Authorization': 'Bearer {}'.format(chiefbaker_jwt)
+        }   
+        res = self.client().delete('/ingredients/2', headers=headers)
+        data = json.loads(res.data)
+
+        the_ingredient = Ingredient.query.filter_by(id=2).one_or_none()
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertEqual(the_ingredient, None)
+
+
+    # ----------------------------------------------------------------------------
+    #  DELETE /ingredients/<int:id>
+    #      ingredient does not exist
+    # ----------------------------------------------------------------------------
+    def test_delete_ingredient_non_existent(self):
+        print("test DELETE non-existent ingredient")
+
+        headers = {
+            'Authorization': 'Bearer {}'.format(chiefbaker_jwt)
+        }   
+        res = self.client().delete('/ingredients/2000', headers=headers)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+
+    # ----------------------------------------------------------------------------
+    #  PATCH /ingredients/<int:id>
+    # ----------------------------------------------------------------------------
+    def test_patch_ingredients(self):
+        print("testing updating an ingredient")
+        headers = {
+            'Authorization': 'Bearer {}'.format(chiefbaker_jwt)
+        }           
+        res = self.client().patch('/ingredients/4', headers=headers,
+                                  json = {"name": "chocolate sprinkles", "kind": "topping" })
+
+        data = json.loads(res.data)
+        the_ingredient = (Ingredient.query
+                                    .filter(Ingredient.id==4)
+                                    .first()
+        )
+        self.assertEqual(the_ingredient.format()['name'], 'chocolate sprinkles')
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+
+    # ----------------------------------------------------------------------------
+    #  PATCH /ingredients/<int:id>
+    #     ingredient does not exist
+    # ----------------------------------------------------------------------------
+    def test_patch_ingredients(self):
+        print("testing updating a non-existent ingredient")
+        headers = {
+            'Authorization': 'Bearer {}'.format(chiefbaker_jwt)
+        }           
+        res = self.client().patch('/ingredients/4000', headers=headers,
+                                  json = {"name": "chocolate sprinkles", "kind": "topping" })
+
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)        
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
