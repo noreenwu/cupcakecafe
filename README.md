@@ -664,8 +664,8 @@ Now run the test script:
 
 ### Useful Commands
 
-    ```git push heroku master``` - push latest files to heroku
+    git push heroku master - push latest files to heroku
 
-    ```heroku run python load_data.py --app cupcakecafe``` - delete data and load initial data
+    heroku run python load_data.py --app cupcakecafe - delete data and load initial data
 
-    ```heroku pg:psql --app cupcakecafe``` - look at data in heroku database
+    heroku pg:psql --app cupcakecafe - look at data in heroku database
