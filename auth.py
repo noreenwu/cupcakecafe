@@ -96,7 +96,7 @@ def verify_decode_jwt(token):
     jwks = json.loads(jsonurl.read())
     try:
         unverified_header = jwt.get_unverified_header(token)
-    except:
+    except Exception:
         print("Invalid jwt")
         abort(401)
 
