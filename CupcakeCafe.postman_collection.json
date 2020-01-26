@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "aa44358d-ea6b-48e5-ad77-91c199d8a950",
-		"name": "CupcakeCafe copy",
+		"_postman_id": "3fbd5fa4-5c6d-4603-adfe-4cd2485ec766",
+		"name": "CupcakeCafe",
 		"description": "This API allows its user to add, delete and update cupcakes, ingredients and orders, all pertaining to business done at the Cupcake Cafe",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
