@@ -11,8 +11,8 @@ from auth import AuthError, requires_auth
 
 # -----------------------------------------------------------------------------------
 #  Since the specified cupcake is about to have its ingredients reset, first
-#  update the usage_counts of the ingredients that it will no longer be associated
-#  with.
+#  update the usage_counts of the ingredients that it won't be associated
+#  with anymore.
 # -----------------------------------------------------------------------------------
 def update_ingredient_usage_counts(the_cupcake):
 
@@ -34,16 +34,22 @@ def attach_new_ingredients_to_cupcake(ingredients, the_cupcake):
             i['kind']
         except KeyError:
             print("could not get name or kind of ingredient from input")
-            abort(400)        
+            abort(400)
         try:
-            the_ingredient = Ingredient.query.filter_by(kind=i['kind']).filter_by(name=i['name']).one_or_none()
+            the_ingredient = (
+                Ingredient.query
+                          .filter_by(kind=i['kind'])
+                          .filter_by(name=i['name']).one_or_none()
+            )
         except DatabaseError:
             print("unable to query ingredients")
             abort(422)
         if the_ingredient is None:
             # create the ingredient
             try:
-                new_ingredient = Ingredient(name=i['name'], kind=i['kind'], usage_count=1)
+                new_ingredient = (
+                    Ingredient(name=i['name'], kind=i['kind'], usage_count=1)
+                )
                 new_ingredient.insert()
                 the_cupcake.ingredients.append(new_ingredient)
             except DatabaseError:
@@ -85,7 +91,9 @@ def get_order_items_db(order_items, order_id):
             abort(400)
 
         try:
-            new_order_item = OrderItem(cupcake_id=cc_id, quantity=quant, order_id=order_id)
+            new_order_item = (
+                OrderItem(cupcake_id=cc_id, quantity=quant, order_id=order_id)
+            )
             new_order_item.insert()
 
         except DatabaseError:
@@ -95,16 +103,17 @@ def get_order_items_db(order_items, order_id):
         orders_db_form.append(new_order_item)
 
     return (orders_db_form)
-    
+
 
 def del_old_order_items(order_items):
 
     for o in order_items:
         o.delete()
 
+
 def is_valid_order_items(order_items):
-    # cycle through the order items and verify that they were specified correctly
-    # and that the cupcake id is in the database
+    # cycle through the order items and verify that they were
+    # specified correctly and that the cupcake id is in the database
 
     for o in order_items:
         try:
@@ -122,15 +131,13 @@ def is_valid_order_items(order_items):
             return False   # order_items were not specified correctly
 
     return True
-    
+
 
 def create_app(test_config=None):
 
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
-
-
 
     @app.route('/cupcakes', methods=['GET'])
     def get_cupcakes():
@@ -144,7 +151,6 @@ def create_app(test_config=None):
             clist.append(c.long())
 
         return jsonify({"success": True, "cupcakes": clist}), 200
-
 
     @app.route('/cupcakes/<int:id>')
     def get_cupcake_detail(id):
@@ -206,7 +212,6 @@ def create_app(test_config=None):
         if ingredients:
             attach_new_ingredients_to_cupcake(ingredients, new_cupcake)
 
-
         try:
             new_cupcake.insert()
         except DatabaseError:
@@ -218,14 +223,13 @@ def create_app(test_config=None):
 
 # ---------------------------------------------------------------------------
 #  Update the specified cupcake with specified name and description.
-#  Cannot have optional ingredients, so ingredients will have to be 
-#  specified. If ingredient list is not available, then the empty array 
+#  Cannot have optional ingredients, so ingredients will have to be
+#  specified. If ingredient list is not available, then the empty array
 #  should be specified.
 # ---------------------------------------------------------------------------
     @app.route('/cupcakes/<int:id>', methods=['PATCH'])
     @requires_auth('patch:cupcakes')
     def update_cupcake(f, id):
-        print ("update cupcake")
 
         if not request.json:
             abort(400)
@@ -252,7 +256,11 @@ def create_app(test_config=None):
         if name and name is not None:
             # check if new name is already taken
             try:
-                cc_same_name = Cupcake.query.filter_by(name=name).filter(id!=the_cupcake.id).one_or_none()
+                cc_same_name = (
+                    Cupcake.query.filter_by(name=name)
+                                 .filter(id != the_cupcake.id)
+                                 .one_or_none()
+                )
             except DatabaseError:
                 abort(422)
             if cc_same_name is not None:
@@ -261,31 +269,28 @@ def create_app(test_config=None):
             the_cupcake.name = name
 
         if description and description is not None:
-            the_cupcake.description = description        
+            the_cupcake.description = description
 
-        # if no ingredients are specified, usage_counts are updated and cupcake's ingredients are reset
+        # if no ingredients are specified, usage_counts are updated and
+        # cupcake's ingredients are reset
         update_ingredient_usage_counts(the_cupcake)
-        the_cupcake.ingredients = []    # remove any old ingredients (disassociate from this cupcake)
-        if ingredients:    
+
+        # remove any old ingredients (disassociate from this cupcake)
+        the_cupcake.ingredients = []
+
+        if ingredients:
             attach_new_ingredients_to_cupcake(ingredients, the_cupcake)
             # cupcake should get updated in attach_new_ingredients
 
-
-        # try:
-        #     the_cupcake.update()
-        # except DatabaseError:
-        #     print ("could not update the cupcake")
-        #     abort(422)
         clist = [the_cupcake.long()]
-        
-        return jsonify({"success": True, "cupcakes": clist }), 200
 
+        return jsonify({"success": True, "cupcakes": clist}), 200
 
     @app.route('/cupcakes/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:cupcakes')    
+    @requires_auth('delete:cupcakes')
     def delete_cupcake(f, id):
         print("delete cupcake")
-        
+
         try:
             the_cupcake = Cupcake.query.filter_by(id=id).one_or_none()
             if the_cupcake is None:
@@ -298,7 +303,7 @@ def create_app(test_config=None):
         return jsonify({"success": True, "delete": id}), 200
 
     @app.route('/ingredients')
-    @requires_auth('get:ingredients')    
+    @requires_auth('get:ingredients')
     def get_ingredients(f):
         try:
             ingredients = Ingredient.query.all()
@@ -312,7 +317,7 @@ def create_app(test_config=None):
         return jsonify({"success": True, "ingredients": ilist}), 200
 
     @app.route('/ingredients/<int:id>')
-    @requires_auth('get:ingredients')    
+    @requires_auth('get:ingredients')
     def get_specific_ingredient(f, id):
 
         try:
@@ -326,9 +331,8 @@ def create_app(test_config=None):
 
         return jsonify({"success": True, "ingredients": ingredient_list}), 200
 
-
     @app.route('/ingredients', methods=['POST'])
-    @requires_auth('post:ingredients')     
+    @requires_auth('post:ingredients')
     def create_ingredient(f):
 
         print("create ingredient")
@@ -363,9 +367,8 @@ def create_app(test_config=None):
         return jsonify({'success': True,
                         'ingredients': ilist}), 200
 
-
     @app.route('/ingredients/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:ingredients')    
+    @requires_auth('delete:ingredients')
     def delete_ingredient(f, id):
 
         try:
@@ -379,13 +382,12 @@ def create_app(test_config=None):
 
         return jsonify({"success": True, "delete": id}), 200
 
-
     @app.route('/ingredients/<int:id>', methods=['PATCH'])
-    @requires_auth('patch:ingredients')    
+    @requires_auth('patch:ingredients')
     def update_ingredient_name(f, id):
         if not request.json:
             abort(400)
-            
+
         try:
             name = request.get_json()['name']
             kind = request.get_json()['kind']
@@ -403,7 +405,7 @@ def create_app(test_config=None):
 
         if name and name is not None:
             the_ingredient.name = name
-        
+
         if kind and kind is not None:
             the_ingredient.kind = kind
 
@@ -415,7 +417,6 @@ def create_app(test_config=None):
 
         ilist = [the_ingredient.format()]
         return jsonify({'success': True, "ingredients": ilist}), 200
-
 
     # orders
     @app.route('/orders', methods=['GET'])
@@ -435,7 +436,7 @@ def create_app(test_config=None):
 
     # get a specific order
     @app.route('/orders/<int:id>', methods=['GET'])
-    @requires_auth('get:orders')    
+    @requires_auth('get:orders')
     def get_orders_detail(f, id):
 
         try:
@@ -448,26 +449,24 @@ def create_app(test_config=None):
         orderlist = [the_order.format()]
         return jsonify({"success": True, "orders": orderlist}), 200
 
-
     @app.route('/orders/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:orders')    
+    @requires_auth('delete:orders')
     def delete_order(f, id):
         print("delete order")
-        
+
         try:
             the_order = Order.query.filter_by(id=id).one_or_none()
             if the_order is None:
                 abort(404)
-            the_order.delete()  # should cascade delete all associated OrderItems
+            the_order.delete()  # cascade delete all associated OrderItems
         except DatabaseError:
             print("Error occurred while trying to delete the cupcake")
             abort(422)
 
         return jsonify({"success": True, "delete": id}), 200
 
-
     @app.route('/orders', methods=['POST'])
-    @requires_auth('post:orders') 
+    @requires_auth('post:orders')
     def create_order(f):
 
         print("create order")
@@ -478,22 +477,24 @@ def create_app(test_config=None):
             customer_name = request.get_json()['customer_name']
             order_items = request.get_json()['order_items']
         except KeyError:
-            print("could not get values customer_name or order_values from input")
+            print("could not get customer_name or order_values from input")
             abort(400)
 
-        if not customer_name or customer_name is None or not order_items or order_items is None:
+        if (not customer_name or customer_name is None or
+                not order_items or order_items is None):
             abort(400)
 
         if not is_valid_order_items(order_items):
             abort(400)
 
         try:
-            new_order = Order(customer_name=customer_name)  # add order_items after; they need the order_id
+            new_order = Order(customer_name=customer_name)
+            # add order_items after; they need the order_id
             new_order.insert()
         except DatabaseError:
             print("could not insert new order")
             abort(422)
-            
+
         db_order_items = get_order_items_db(order_items, new_order.id)
         if len(db_order_items) == 0:
             print("no order items for this order")
@@ -503,18 +504,17 @@ def create_app(test_config=None):
         return jsonify({'success': True,
                         'orders': order_list}), 200
 
-
     @app.route('/orders/<int:id>', methods=['PATCH'])
-    @requires_auth('patch:orders')     
+    @requires_auth('patch:orders')
     def update_specific_order(f, id):
         if not request.json:
             abort(400)
-            
+
         try:
             customer_name = request.get_json()['customer_name']
             order_items = request.get_json()['order_items']
         except KeyError:
-            print("could not get values customer_name or order_items from input")
+            print("could not get customer_name or order_items from input")
             abort(400)
 
         try:
@@ -531,12 +531,14 @@ def create_app(test_config=None):
 
         if customer_name and customer_name is not None:
             the_order.customer_name = customer_name
-        
+
         if order_items and order_items is not None:
             # delete the old order_items associated with this order
             del_old_order_items(the_order.order_items)
             the_order.order_items = []
-            get_order_items_db(order_items, the_order.id)  # associate new order items
+
+            # associate new order items
+            get_order_items_db(order_items, the_order.id)
 
         try:
             the_order.update()
@@ -569,7 +571,7 @@ def create_app(test_config=None):
             "success": False,
             "error": 400,
             "message": "Bad request"
-        }), 400        
+        }), 400
 
     @app.errorhandler(401)
     def cannot_process(error):
@@ -585,7 +587,7 @@ def create_app(test_config=None):
                         "success": False,
                         "error": 403,
                         "message": "Unauthorized"
-                        }), 403        
+                        }), 403
 
     @app.errorhandler(405)
     def resource_not_found(error):
@@ -593,11 +595,13 @@ def create_app(test_config=None):
                         "success": False,
                         "error": 405,
                         "message": "Method not allowed"
-                        }), 405   
+                        }), 405
 
     return app
 
+
 app = create_app()
+
 
 if __name__ == '__main__':
     app.run()
