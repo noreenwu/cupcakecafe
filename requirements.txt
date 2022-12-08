@@ -3,7 +3,7 @@ aniso8601==6.0.0
 astroid==2.3.3
 awscli==1.16.309
 botocore==1.13.45
-certifi==2019.11.28
+certifi==2022.12.7
 Click==7.0
 colorama==0.4.1
 docutils==0.15.2
